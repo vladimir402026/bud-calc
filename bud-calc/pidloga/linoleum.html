@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор лінолеуму та плінтусів онлайн — підбір ширини рулону та фурнітури | БудКальк</title>
+    <meta name="description" content="Онлайн-калькулятор лінолеуму та плінтусів: точний підбір ширини рулону без зайвих обрізків, розрахунок планок плінтуса, куточків і заглушок.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#pidloga">Підлога та облицювання</a> &rarr; 
+            <span>Лінолеум та плінтуси</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор лінолеуму та плінтусів</h1>
+            <p>Розрахуйте відріз лінолеуму за шириною рулону, а також кількість планок плінтуса і фурнітури.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Розміри кімнати</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="roomLength">Довжина кімнати (м)</label>
+                        <input type="number" id="roomLength" value="4.8" step="0.1" min="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomWidth">Ширина кімнати (м)</label>
+                        <input type="number" id="roomWidth" value="3.3" step="0.1" min="0.5">
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Параметри рулону лінолеуму</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="rollWidth">Ширина рулону в магазині (м)</label>
+                        <select id="rollWidth" onchange="calculateLinoleum()">
+                            <option value="2.0">2.0 метри</option>
+                            <option value="2.5">2.5 метри</option>
+                            <option value="3.0">3.0 метри</option>
+                            <option value="3.5" selected>3.5 метри</option>
+                            <option value="4.0">4.0 метри</option>
+                            <option value="5.0">5.0 метрів</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trimReserve">Запас на підрізку по довжині (см)</label>
+                        <input type="number" id="trimReserve" value="10" step="5" min="0" max="50">
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Параметри плінтуса</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="plinthLen">Довжина 1 планки плінтуса (м)</label>
+                        <select id="plinthLen" onchange="calculateLinoleum()">
+                            <option value="2.5" selected>2.5 метри (стандарт ПВХ)</option>
+                            <option value="2.2">2.2 метри (МДФ / дерево)</option>
+                            <option value="2.4">2.4 метри</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="doorCount">Кількість дверних прорізів (шт)</label>
+                        <input type="number" id="doorCount" value="1" step="1" min="0" max="10">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="doorWidth">Ширина дверей (м)</label>
+                        <input type="number" id="doorWidth" value="0.9" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="outerCorners">Зовнішні кути в кімнаті (шт)</label>
+                        <input type="number" id="outerCorners" value="0" step="1" min="0" max="20">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateLinoleum()">Розрахувати матеріали</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Результат розрахунку</div>
+                
+                <div class="result-main-card">
+                    <span>Відріз лінолеуму</span>
+                    <strong id="resCut">3.5 × 4.9 м</strong>
+                    <span id="resTotalSqm">загальна площа 17.15 м² (чиста 15.84 м²)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Кількість планок плінтуса (<span id="lblPlinthL">2.5</span> м):</span>
+                        <strong id="resPlinths">7 шт. (15.3 м)</strong>
+                    </li>
+                    <li>
+                        <span>Внутрішні куточки:</span>
+                        <strong id="resInnerCorners">4 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Зовнішні куточки:</span>
+                        <strong id="resOuterCorners">0 шт.</strong>
+                    </li>
+                    <li>
+                        <span>З'єднувачі (стики планок):</span>
+                        <strong id="resConnectors">4 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Заглушки (ліва + права біля дверей):</span>
+                        <strong id="resCaps">2 шт. (1 пара)</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати список</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як вибрати ширину рулону лінолеуму без стиків?</h2>
+            <p>Головна перевага лінолеуму — можливість застелити всю кімнату єдиним суцільним полотном без швів. Щоб не переплачувати за зайві обрізки:</p>
+            <ul>
+                <li><strong>Обирайте ширину рулону з невеликим запасом:</strong> якщо ширина кімнати 3.3 м, ідеально підійде рулон шириною 3.5 м (по 10 см з кожного боку піде на підрізку під кривизну стін).</li>
+                <li><strong>Враховуйте дверний проріз та балконну нішу:</strong> вимірюйте кімнату не від стіни до стіни, а з урахуванням глибини дверного отвору та виступу під балконними дверима, щоб покриття зайшло під поріжок.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateLinoleum() {
+            const roomL = parseFloat(document.getElementById('roomLength').value) || 0;
+            const roomW = parseFloat(document.getElementById('roomWidth').value) || 0;
+            const rollW = parseFloat(document.getElementById('rollWidth').value) || 3.5;
+            const reserveM = (parseFloat(document.getElementById('trimReserve').value) || 0) / 100;
+
+            const plinthL = parseFloat(document.getElementById('plinthLen').value) || 2.5;
+            const doorCount = parseInt(document.getElementById('doorCount').value) || 0;
+            const doorW = parseFloat(document.getElementById('doorWidth').value) || 0.9;
+            const outerCorners = parseInt(document.getElementById('outerCorners').value) || 0;
+
+            const cleanArea = roomL * roomW;
+
+            // Визначаємо потрібну довжину відрізу залежно від ширини рулону
+            let cutLength = 0;
+            let warning = '';
+            if (rollW >= roomW) {
+                cutLength = roomL + reserveM;
+            } else if (rollW >= roomL) {
+                cutLength = roomW + reserveM;
+            } else {
+                // Якщо кімната ширша за рулон — рахуємо у 2 смуги
+                const strips = Math.ceil(roomW / rollW);
+                cutLength = (roomL + reserveM) * strips;
+                warning = ' (у 2 смуги зі стиком)';
+            }
+
+            const boughtArea = rollW * cutLength;
+
+            // Розрахунок плінтуса
+            const perimeter = (roomL + roomW) * 2;
+            const cleanPlinthMeters = Math.max(0, perimeter - (doorCount * doorW));
+            const plinthCount = Math.ceil((cleanPlinthMeters * 1.05) / plinthL);
+
+            // Фурнітура (стандартно 4 внутрішніх кути + зовнішні)
+            const innerCorners = 4 + outerCorners;
+            const caps = doorCount * 2;
+            const connectors = Math.max(0, plinthCount - 1);
+
+            document.getElementById('resCut').textContent = `${rollW} × ${cutLength.toFixed(2)} м${warning}`;
+            document.getElementById('resTotalSqm').textContent = `площа рулону ${boughtArea.toFixed(2)} м² (чиста ${cleanArea.toFixed(2)} м²)`;
+            
+            document.getElementById('lblPlinthL').textContent = plinthL;
+            document.getElementById('resPlinths').textContent = `${plinthCount} шт. (${cleanPlinthMeters.toFixed(1)} м)`;
