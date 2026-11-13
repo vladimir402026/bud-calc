@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор шпалер онлайн — розрахунок рулонів на кімнату | БудКальк</title>
-    <meta name="description" content="Точний онлайн-калькулятор шпалер: розрахунок кількості рулонів з урахуванням висоти стелі, підгону малюнка (рапорту), площі вікон та дверей.">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-    <!-- Шапка сайту -->
     <header class="header">
         <div class="container header-container">
             <a href="../index.html" class="logo">
@@ -26,23 +24,18 @@
     </header>
 
     <main class="container">
-        <!-- Хлібні крихти -->
         <div class="breadcrumbs">
             <a href="../index.html">Головна</a> &rarr; 
             <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
             <span>Калькулятор шпалер</span>
         </div>
 
-        <!-- Заголовок сторінки -->
         <div class="page-header">
             <h1>Калькулятор розрахунку шпалер</h1>
             <p>Введіть розміри кімнати та параметри рулону, щоб дізнатися точну кількість матеріалу.</p>
         </div>
 
-        <!-- Основний блок калькулятора -->
         <div class="calc-wrapper">
-            
-            <!-- Ліва частина: Форма вводу -->
             <div class="calc-form-box">
                 <div class="form-section-title">1. Розміри кімнати</div>
                 <div class="form-grid">
@@ -64,7 +57,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="rollPreset">Стандартний розмір</label>
-                        <select id="rollPreset" onchange="applyPreset()">
+                        <select id="rollPreset">
                             <option value="1.06x10.05">Метрові (1.06 × 10.05 м)</option>
                             <option value="0.53x10.05">Стандартні (0.53 × 10.05 м)</option>
                             <option value="1.06x25">Під фарбування (1.06 × 25 м)</option>
@@ -73,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label for="rapport">Підгін малюнка / рапорт (см)</label>
-                        <input type="number" id="rapport" value="0" step="1" min="0" placeholder="0 - без підгону">
+                        <input type="number" id="rapport" value="0" step="1" min="0">
                     </div>
                 </div>
 
@@ -88,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="form-section-title">3. Вікна та двері (віднімаються від периметра)</div>
+                <div class="form-section-title">3. Вікна та двері</div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="winWidth">Ширина вікна (м)</label>
@@ -110,94 +103,100 @@
                     </div>
                 </div>
 
-                <button class="btn-calc" onclick="calculateWallpaper()">Розрахувати кількість</button>
+                <button type="button" class="btn-calc" id="calcBtn">Розрахувати кількість</button>
             </div>
 
-            <!-- Права частина: Результати -->
             <div class="calc-result-box">
                 <div class="result-header">📊 Результат розрахунку</div>
-                
                 <div class="result-main-card">
                     <span>Необхідно придбати</span>
                     <strong id="resRolls">5 рул.</strong>
-                    <span id="resReserveNote">з урахуванням підрізки та запасу</span>
+                    <span>з урахуванням підрізки та запасу</span>
                 </div>
-
                 <ul class="result-list">
-                    <li>
-                        <span>Периметр кімнати (чистий):</span>
-                        <strong id="resPerimeter">13.0 м</strong>
-                    </li>
-                    <li>
-                        <span>Загальна площа поклейки:</span>
-                        <strong id="resArea">35.1 м²</strong>
-                    </li>
-                    <li>
-                        <span>Потрібно цілих смуг:</span>
-                        <strong id="resStrips">13 шт.</strong>
-                    </li>
-                    <li>
-                        <span>Смуг з одного рулону:</span>
-                        <strong id="resStripsPerRoll">3 шт.</strong>
-                    </li>
+                    <li><span>Периметр кімнати (чистий):</span><strong id="resPerimeter">13.0 м</strong></li>
+                    <li><span>Загальна площа поклейки:</span><strong id="resArea">35.1 м²</strong></li>
+                    <li><span>Потрібно цілих смуг:</span><strong id="resStrips">13 шт.</strong></li>
+                    <li><span>Смуг з одного рулону:</span><strong id="resStripsPerRoll">3 шт.</strong></li>
                 </ul>
-
-                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+                <button type="button" class="btn-copy" id="copyBtn">📋 Скопіювати розрахунок</button>
             </div>
         </div>
-
-        <!-- Корисна стаття для SEO -->
-        <article class="seo-article">
-            <h2>Як правильно розрахувати шпалери для кімнати?</h2>
-            <p>Наш калькулятор рахує шпалери за професійною будівельною методикою — <strong>по смугах</strong>, а не просто діленням площі стін на площу рулону. Це захищає вас від ситуації, коли за квадратними метрами матеріалу вистачає, а по висоті залишаються короткі обрізки, які нікуди приклеїти.</p>
-            <ul>
-                <li><strong>Запас на підрізку:</strong> програма автоматично додає 10 см (0.1 м) до висоти кожної смуги для вирівнювання біля стелі та плінтуса.</li>
-                <li><strong>Рапорт (підгін малюнка):</strong> якщо на етикетці шпалер вказано крок малюнка (наприклад, 32 см або 64 см), введіть це значення у відповідне поле — калькулятор врахує додаткові витрати на суміщення візерунка.</li>
-                <li><strong>Вікна та двері:</strong> їхня ширина віднімається від загального периметра кімнати, проте невеликий запас над вікном і під підвіконням залишається на випадок підрізування.</li>
-            </ul>
-        </article>
     </main>
 
-    <!-- Підвал -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
         </div>
     </footer>
 
-    <!-- Логіка розрахунку -->
     <script>
-        function applyPreset() {
-            const preset = document.getElementById('rollPreset').value;
-            const widthInput = document.getElementById('rollWidth');
-            const lengthInput = document.getElementById('rollLength');
+        function calculateWallpaper() {
+            var length = parseFloat(document.getElementById('roomLength').value) || 0;
+            var width = parseFloat(document.getElementById('roomWidth').value) || 0;
+            var height = parseFloat(document.getElementById('roomHeight').value) || 0;
 
-            if (preset === '1.06x10.05') {
-                widthInput.value = 1.06;
-                lengthInput.value = 10.05;
-            } else if (preset === '0.53x10.05') {
-                widthInput.value = 0.53;
-                lengthInput.value = 10.05;
-            } else if (preset === '1.06x25') {
-                widthInput.value = 1.06;
-                lengthInput.value = 25;
+            var rollWidth = parseFloat(document.getElementById('rollWidth').value) || 1.06;
+            var rollLength = parseFloat(document.getElementById('rollLength').value) || 10.05;
+            var rapportCm = parseFloat(document.getElementById('rapport').value) || 0;
+            var rapportM = rapportCm / 100;
+
+            var winWidth = parseFloat(document.getElementById('winWidth').value) || 0;
+            var winCount = parseInt(document.getElementById('winCount').value) || 0;
+            var doorWidth = parseFloat(document.getElementById('doorWidth').value) || 0;
+            var doorCount = parseInt(document.getElementById('doorCount').value) || 0;
+
+            var totalPerimeter = (length + width) * 2;
+            var openingsWidth = (winWidth * winCount) + (doorWidth * doorCount);
+            var cleanPerimeter = Math.max(0, totalPerimeter - openingsWidth);
+
+            var area = cleanPerimeter * height;
+            var stripsNeeded = Math.ceil(cleanPerimeter / rollWidth);
+
+            var stripHeight = height + 0.10;
+            if (rapportM > 0) {
+                stripHeight = Math.ceil(stripHeight / rapportM) * rapportM;
             }
-            calculateWallpaper();
+
+            var stripsPerRoll = Math.floor(rollLength / stripHeight);
+            var rollsNeeded = stripsPerRoll > 0 ? Math.ceil(stripsNeeded / stripsPerRoll) : 0;
+
+            document.getElementById('resRolls').textContent = rollsNeeded + ' рул.';
+            document.getElementById('resPerimeter').textContent = cleanPerimeter.toFixed(2) + ' м';
+            document.getElementById('resArea').textContent = area.toFixed(1) + ' м²';
+            document.getElementById('resStrips').textContent = stripsNeeded + ' шт.';
+            document.getElementById('resStripsPerRoll').textContent = (stripsPerRoll > 0 ? stripsPerRoll : 0) + ' шт.';
         }
 
-        function calculateWallpaper() {
-            // Отримуємо значення з полів
-            const length = parseFloat(document.getElementById('roomLength').value) || 0;
-            const width = parseFloat(document.getElementById('roomWidth').value) || 0;
-            const height = parseFloat(document.getElementById('roomHeight').value) || 0;
+        document.getElementById('rollPreset').addEventListener('change', function() {
+            var preset = this.value;
+            if (preset === '1.06x10.05') {
+                document.getElementById('rollWidth').value = 1.06;
+                document.getElementById('rollLength').value = 10.05;
+            } else if (preset === '0.53x10.05') {
+                document.getElementById('rollWidth').value = 0.53;
+                document.getElementById('rollLength').value = 10.05;
+            } else if (preset === '1.06x25') {
+                document.getElementById('rollWidth').value = 1.06;
+                document.getElementById('rollLength').value = 25;
+            }
+            calculateWallpaper();
+        });
 
-            const rollWidth = parseFloat(document.getElementById('rollWidth').value) || 1.06;
-            const rollLength = parseFloat(document.getElementById('rollLength').value) || 10.05;
-            const rapportCm = parseFloat(document.getElementById('rapport').value) || 0;
-            const rapportM = rapportCm / 100;
+        document.getElementById('calcBtn').addEventListener('click', calculateWallpaper);
 
-            const winWidth = parseFloat(document.getElementById('winWidth').value) || 0;
-            const winCount = parseInt(document.getElementById('winCount').value) || 0;
-            const doorWidth = parseFloat(document.getElementById('doorWidth').value) || 0;
-            const doorCount = parseInt(document.getElementById('doorCount').value) || 0;
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            var rolls = document.getElementById('resRolls').textContent;
+            var area = document.getElementById('resArea').textContent;
+            var strips = document.getElementById('resStrips').textContent;
+            var text = "Розрахунок шпалер (БудКальк):\n- Рулонів: " + rolls + "\n- Площа: " + area + "\n- Смуг: " + strips;
 
+            var el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            var btn = this;
+            btn.textContent = '✅ Скопійовано!';
