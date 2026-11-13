@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор гіпсокартону онлайн — розрахунок листів, профілів UD/CD та комплектуючих | БудКальк</title>
+    <meta name="description" content="Комплексний онлайн-калькулятор гіпсокартону для стін і стелі: розрахунок кількості листів ГКЛ, профілів UD та CD, підвісів, крабів і саморізів.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
+            <span>Калькулятор гіпсокартону</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор гіпсокартону та профілів</h1>
+            <p>Розрахуйте листи ГКЛ, металевий каркас (UD, CD) та всі необхідні кріплення для стін або стелі.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Тип конструкції</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="constructType">Що обшиваємо?</label>
+                        <select id="constructType" onchange="calculateDrywall()">
+                            <option value="wall">Облицювання стін (каркас)</option>
+                            <option value="ceiling">Підвісна стеля (однорівнева)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="layersCount">Кількість шарів ГКЛ</label>
+                        <select id="layersCount" onchange="calculateDrywall()">
+                            <option value="1" selected>1 шар (стандарт)</option>
+                            <option value="2">2 шари (підвищена міцність/звукоізоляція)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Розміри поверхні</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="length">Довжина (м)</label>
+                        <input type="number" id="length" value="4.5" step="0.1" min="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="widthOrHeight">Ширина стелі або висота стіни (м)</label>
+                        <input type="number" id="widthOrHeight" value="3.2" step="0.1" min="0.5">
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Розмір листа ГКЛ та профілю</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sheetSize">Розмір листа гіпсокартону</label>
+                        <select id="sheetSize" onchange="calculateDrywall()">
+                            <option value="3.0">1200 × 2500 мм (3.0 м²)</option>
+                            <option value="2.4">1200 × 2000 мм (2.4 м²)</option>
+                            <option value="3.6">1200 × 3000 мм (3.6 м²)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileLen">Довжина профілю (м)</label>
+                        <select id="profileLen" onchange="calculateDrywall()">
+                            <option value="3" selected>3 метри (стандарт)</option>
+                            <option value="4">4 метри</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reserve">Запас на підрізку листів (%)</label>
+                    <input type="number" id="reserve" value="10" step="1" min="0" max="30">
+                </div>
+
+                <button class="btn-calc" onclick="calculateDrywall()">Розрахувати матеріали</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Комплектація матеріалів</div>
+                
+                <div class="result-main-card">
+                    <span>Листи гіпсокартону (ГКЛ)</span>
+                    <strong id="resSheets">6 шт.</strong>
+                    <span id="resAreaNote">площа поверхні 14.4 м²</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Профіль направляючий UD (<span class="pLen">3</span> м):</span>
+                        <strong id="resUD">6 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Профіль стійковий/стельовий CD (<span class="pLen">3</span> м):</span>
+                        <strong id="resCD">12 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Підвіс прямий (П-подібний):</span>
+                        <strong id="resHangers">36 шт.</strong>
+                    </li>
+                    <li>
+                        <span>З'єднувач «Краб» (для стелі):</span>
+                        <strong id="resCrabs">0 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Дюбель-цвях 6×40 (для UD та підвісів):</span>
+                        <strong id="resDowels">105 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Саморізи по металу 3.5×25 (для ГКЛ):</span>
+                        <strong id="resScrewsGKL">360 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Саморізи «блошки» 3.5×9.5 (для каркасу):</span>
+                        <strong id="resScrewsMetal">110 шт.</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати список</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Норми розрахунку каркаса для гіпсокартону</h2>
+            <p>Калькулятор розраховує матеріали за стандартною технологією монтажу (крок основних профілів CD становить <strong>600 мм</strong> для стін та <strong>400–500 мм</strong> для стелі):</p>
+            <ul>
+                <li><strong>Направляючий профіль (UD):</strong> монтується по всьому периметру конструкції із запасом 10% на стикування.</li>
+                <li><strong>Підвіси:</strong> встановлюються вздовж кожного профілю CD з кроком 60–70 см (по 2 дюбелі на кожен підвіс).</li>
+                <li><strong>Саморізи:</strong> на один стандартний лист 1.2×2.5 м витрачається близько 50–60 саморізів 3.5×25 мм (при двошаровій обшивці для другого шару використовують довші саморізи 3.5×35 мм).</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateDrywall() {
+            const type = document.getElementById('constructType').value;
+            const layers = parseInt(document.getElementById('layersCount').value) || 1;
+            const length = parseFloat(document.getElementById('length').value) || 0;
+            const width = parseFloat(document.getElementById('widthOrHeight').value) || 0;
+            const sheetArea = parseFloat(document.getElementById('sheetSize').value) || 3.0;
+            const profileLen = parseFloat(document.getElementById('profileLen').value) || 3;
+            const reserve = parseFloat(document.getElementById('reserve').value) || 10;
+
+            const area = length * width;
+            const perimeter = (length + width) * 2;
+
+            // 1. Листи ГКЛ
+            const totalSheetArea = area * layers * (1 + reserve / 100);
+            const sheets = Math.ceil(totalSheetArea / sheetArea);
+
+            // 2. Профіль UD по периметру (+10% запас)
+            const udMeters = perimeter * 1.1;
+            const udCount = Math.ceil(udMeters / profileLen);
+
+            // 3. Профіль CD (крок 0.6 м для стіни, 0.5 м для стелі + поперечки)
+            const step = type === 'wall' ? 0.6 : 0.5;
+            const mainRows = Math.ceil(length / step) + 1;
+            let cdMeters = mainRows * width;
+
+            // Для стелі додаємо поперечні перемички для стиків листів
+            let crabs = 0;
+            if (type === 'ceiling') {
+                const crossRows = Math.floor(width / 1.25);
+                cdMeters += crossRows * length;
+                crabs = mainRows * crossRows;
+            }
+            const cdCount = Math.ceil((cdMeters * 1.1) / profileLen);
+
+            // 4. Підвіси (крок 0.65 м на кожному профілі CD)
+            const hangers = Math.ceil(cdMeters / 0.65);
+
+            // 5. Кріплення
+            const dowels = Math.ceil((udMeters / 0.5) + (hangers * 2));
+            const screwsGKL = Math.ceil(area * 22 * layers);
+            const screwsMetal = Math.ceil(hangers * 2 + crabs * 4 + udCount * 4);
+
+            // Вивід результатів

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор перерізу кабелю онлайн — підбір проводу за потужністю та струмом | БудКальк</title>
+    <meta name="description" content="Онлайн-калькулятор вибору перерізу мідного та алюмінієвого кабелю (мм²) за потужністю (кВт), напругою 220В/380В, довжиною лінії та номіналом автомата.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#inzheneriya">Інженерія, електрика та клімат</a> &rarr; 
+            <span>Переріз кабелю</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор перерізу кабелю</h1>
+            <p>Підберіть оптимальний переріз мідного або алюмінієвого проводу за потужністю приладів та довжиною лінії.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Навантаження та мережа</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="powerKw">Сумарна потужність приладів (кВт)</label>
+                        <input type="number" id="powerKw" value="3.5" step="0.1" min="0.1" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="voltage">Напруга мережі (В)</label>
+                        <select id="voltage" onchange="calculateCable()">
+                            <option value="220" selected>220 В (однофазна мережа)</option>
+                            <option value="380">380 В (трифазна мережа)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Параметри кабелю та прокладання</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="material">Матеріал жили</label>
+                        <select id="material" onchange="calculateCable()">
+                            <option value="copper" selected>Мідь (рекомендовано)</option>
+                            <option value="aluminum">Алюміній (переріз від 16 мм²)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="installType">Спосіб прокладання</label>
+                        <select id="installType" onchange="calculateCable()">
+                            <option value="closed" selected>Прихований (у штробі, гофрі, трубі)</option>
+                            <option value="open">Відкритий (на повітрі / в кабель-каналі)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="lineLength">Довжина кабельної лінії (м)</label>
+                        <input type="number" id="lineLength" value="20" step="1" min="1" max="500">
+                    </div>
+                    <div class="form-group">
+                        <label for="cosPhi">Коефіцієнт потужності (cos φ)</label>
+                        <select id="cosPhi" onchange="calculateCable()">
+                            <option value="1" selected>1.0 (ТЕНи, бойлер, плита, освітлення)</option>
+                            <option value="0.85">0.85 (двигуни, насоси, інструмент)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateCable()">Розрахувати переріз</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Результат розрахунку</div>
+                
+                <div class="result-main-card">
+                    <span>Рекомендований переріз жили</span>
+                    <strong id="resSection">2.5 мм²</strong>
+                    <span id="resMatNote">мідний кабель (напр. ВВГнг 3×2.5)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Розрахунковий струм навантаження:</span>
+                        <strong id="resCurrent">15.9 А</strong>
+                    </li>
+                    <li>
+                        <span>Рекомендований автомат захисту:</span>
+                        <strong id="resBreaker">16 А (характеристика C або B)</strong>
+                    </li>
+                    <li>
+                        <span>Втрати напруги на лінії (<span id="lblLen">20</span> м):</span>
+                        <strong id="resDrop">1.4% (в нормі до 5%)</strong>
+                    </li>
+                    <li>
+                        <span>Макс. допустима потужність кабелю:</span>
+                        <strong id="resMaxPower">4.6 кВт (при 21 А)</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Стандартні перерізи кабелю в квартирі та будинку</h2>
+            <p>За правилами улаштування електроустановок (ПУЕ) у житлових приміщеннях використовується виключно <strong>мідний кабель з негорючою ізоляцією</strong> (наприклад, ВВГнг або ВВГнг-LS):</p>
+            <ul>
+                <li><strong>1.5 мм² (автомат 10 А):</strong> використовується для груп освітлення (навантаження до 2.2 кВт).</li>
+                <li><strong>2.5 мм² (автомат 16 А):</strong> стандарт для розеточних груп, пральної машини, посудомийки та бойлера (навантаження до 3.5–4.5 кВт).</li>
+                <li><strong>4.0 мм² (автомат 25 А) або 6.0 мм² (автомат 32 А):</strong> застосовується для потужних варильних поверхонь, духових шаф, електрокотлів та ввідного кабелю в квартиру.</li>
+                <li><strong>Захист кабелю:</strong> автоматичний вимикач у щитку підбирається не під потужність приладу, а під максимальний допустимий струм кабелю, щоб захистити ізоляцію від перегріву та займання.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculateCable() {
+            const powerKw = parseFloat(document.getElementById('powerKw').value) || 0;
+            const voltage = parseInt(document.getElementById('voltage').value) || 220;
+            const material = document.getElementById('material').value;
+            const install = document.getElementById('installType').value;
+            const length = parseFloat(document.getElementById('lineLength').value) || 10;
+            const cosPhi = parseFloat(document.getElementById('cosPhi').value) || 1;
+
+            // 1. Струм (А)
+            let current = 0;
+            if (voltage === 220) {
+                current = (powerKw * 1000) / (220 * cosPhi);
+            } else {
+                current = (powerKw * 1000) / (1.732 * 380 * cosPhi);
+            }
+
+            // Табличні значення перерізів та допустимих струмів (приховане/відкрите)
+            const copperTable = [
+                { s: 1.5, closed: 15, open: 19, breaker: 10 },
+                { s: 2.5, closed: 21, open: 27, breaker: 16 },
+                { s: 4.0, closed: 27, open: 38, breaker: 25 },
+                { s: 6.0, closed: 34, open: 46, breaker: 32 },
+                { s: 10.0, closed: 50, open: 70, breaker: 40 },
+                { s: 16.0, closed: 70, open: 85, breaker: 63 },
+                { s: 25.0, closed: 85, open: 115, breaker: 80 }
+            ];
+
+            const aluminumTable = [
+                { s: 2.5, closed: 16, open: 20, breaker: 10 },
+                { s: 4.0, closed: 21, open: 28, breaker: 16 },
+                { s: 6.0, closed: 26, open: 36, breaker: 25 },
+                { s: 10.0, closed: 38, open: 50, breaker: 32 },
+                { s: 16.0, closed: 55, open: 60, breaker: 50 },
+                { s: 25.0, closed: 65, open: 85, breaker: 63 },
+                { s: 35.0, closed: 80, open: 105, breaker: 80 }
+            ];
+
+            const table = material === 'copper' ? copperTable : aluminumTable;
+            const rho = material === 'copper' ? 0.0175 : 0.028; // питомий опір
+
+            // Підбір за струмом і перевірка на втрату напруги (не більше 5%)
+            let selected = table[table.length - 1];
+            let dropPercent = 0;
+
+            for (let i = 0; i < table.length; i++) {
+                const item = table[i];
+                const maxAmp = install === 'closed' ? item.closed : item.open;
+                
+                // Падіння напруги (для 1 фази коеф 2, для 3 фаз 1.732)
+                const factor = voltage === 220 ? 2 : 1.732;
+                const deltaU = (factor * current * length * rho) / item.s;
+                const dPercent = (deltaU / voltage) * 100;
+
+                if (maxAmp >= current * 1.05 && dPercent <= 5) {

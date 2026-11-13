@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор керамічної плитки та керамограніту онлайн | БудКальк</title>
+    <meta name="description" content="Онлайн-калькулятор плитки для підлоги та стін: точний розрахунок кількості штук, упаковок і м² з урахуванням швів та підрізки.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#pidloga">Підлога та облицювання</a> &rarr; 
+            <span>Керамічна плитка</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор керамічної плитки</h1>
+            <p>Розрахуйте кількість плиток та упаковок для підлоги або стін із запасом на підрізування.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Розміри поверхні</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="surfLength">Довжина поверхні (м)</label>
+                        <input type="number" id="surfLength" value="3.0" step="0.1" min="0.2">
+                    </div>
+                    <div class="form-group">
+                        <label for="surfWidth">Ширина / висота поверхні (м)</label>
+                        <input type="number" id="surfWidth" value="2.5" step="0.1" min="0.2">
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Розміри плитки та шва</div>
+                <div class="form-group">
+                    <label for="tilePreset">Популярні формати плитки</label>
+                    <select id="tilePreset" onchange="applyTilePreset()">
+                        <option value="600x600">600 × 600 мм (керамограніт)</option>
+                        <option value="300x600">300 × 600 мм (настінна/підлогова)</option>
+                        <option value="1200x600">1200 × 600 мм (великоформатна)</option>
+                        <option value="1200x200">1200 × 200 мм (під дерево)</option>
+                        <option value="300x300">300 × 300 мм (стандарт)</option>
+                        <option value="custom">Свій розмір</option>
+                    </select>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tileLength">Довжина плитки (мм)</label>
+                        <input type="number" id="tileLength" value="600" step="1" min="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="tileWidth">Ширина плитки (мм)</label>
+                        <input type="number" id="tileWidth" value="600" step="1" min="10">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="jointWidth">Ширина шва (мм)</label>
+                        <input type="number" id="jointWidth" value="2" step="0.5" min="0" max="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="tilesPerBox">Штук в упаковці (необов'язково)</label>
+                        <input type="number" id="tilesPerBox" value="4" step="1" min="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reserve">Запас на підрізування та бій (%)</label>
+                    <select id="reserve" onchange="calculateTile()">
+                        <option value="5">5% — мінімальний (велика кімната, мало кутів)</option>
+                        <option value="10" selected>10% — стандартне пряме укладання</option>
+                        <option value="15">15% — діагональне укладання або багато ніш/коробів</option>
+                    </select>
+                </div>
+
+                <button class="btn-calc" onclick="calculateTile()">Розрахувати плитку</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Результат розрахунку</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідно придбати</span>
+                    <strong id="resTiles">23 шт.</strong>
+                    <span id="resBoxesNote">це 6 упаковок (8.28 м²)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Площа поверхні:</span>
+                        <strong id="resSurfaceArea">7.50 м²</strong>
+                    </li>
+                    <li>
+                        <span>Кількість без запасу:</span>
+                        <strong id="resCleanTiles">21 шт.</strong>
+                    </li>
+                    <li>
+                        <span>Кількість цілих упаковок:</span>
+                        <strong id="resBoxes">6 уп.</strong>
+                    </li>
+                    <li>
+                        <span>Хрестики / клинці СВП (орієнтовно):</span>
+                        <strong id="resCrosses">~95 шт.</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Поради перед купівлею керамічної плитки</h2>
+            <p>Керамічна плитка та керамограніт випускаються партіями (тонами та калібрами), які можуть незначно відрізнятися за відтінком на 1–2 мм за розміром. Тому критично важливо купити весь об'єм одразу із запасом.</p>
+            <ul>
+                <li><strong>Чим більша плитка, тим більше відходів:</strong> для формату 1200×600 мм у маленькому санвузлі запас на підрізування часто сягає 15%, оскільки великі обрізки важко використати повторно.</li>
+                <li><strong>Перевіряйте калібр на коробках:</strong> перед оплатою переконайтеся, що на всіх упаковках вказано однаковий номер партії (тон) та калібр.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function applyTilePreset() {
+            const preset = document.getElementById('tilePreset').value;
+            if (preset !== 'custom') {
+                const parts = preset.split('x');
+                document.getElementById('tileLength').value = parts;
+                document.getElementById('tileWidth').value = parts;
+            }
+            calculateTile();
+        }
+
+        function calculateTile() {
+            const surfL = parseFloat(document.getElementById('surfLength').value) || 0;
+            const surfW = parseFloat(document.getElementById('surfWidth').value) || 0;
+            const tileL = (parseFloat(document.getElementById('tileLength').value) || 600) / 1000;
+            const tileW = (parseFloat(document.getElementById('tileWidth').value) || 600) / 1000;
+            const joint = (parseFloat(document.getElementById('jointWidth').value) || 0) / 1000;
+            const perBox = parseInt(document.getElementById('tilesPerBox').value) || 1;
+            const reserve = parseFloat(document.getElementById('reserve').value) || 10;
+
+            const surfaceArea = surfL * surfW;
+            // Площа 1 плитки з урахуванням половини шва по периметру
+            const effectiveTileArea = (tileL + joint) * (tileW + joint);
+            const pureTileArea = tileL * tileW;
+
+            const cleanTiles = Math.ceil(surfaceArea / effectiveTileArea);
+            const totalTiles = Math.ceil(cleanTiles * (1 + reserve / 100));
+            const boxes = Math.ceil(totalTiles / perBox);
+            const totalBoughtArea = totalTiles * pureTileArea;
+            const crosses = totalTiles * 4;
+
+            document.getElementById('resTiles').textContent = totalTiles + ' шт.';
+            document.getElementById('resBoxesNote').textContent = `це ${boxes} уп. (${totalBoughtArea.toFixed(2)} м²)`;
+            document.getElementById('resSurfaceArea').textContent = surfaceArea.toFixed(2) + ' м²';
+            document.getElementById('resCleanTiles').textContent = cleanTiles + ' шт.';
+            document.getElementById('resBoxes').textContent = boxes + ' уп.';
+            document.getElementById('resCrosses').textContent = '~' + crosses + ' шт.';
+        }
+
+        function copyResults() {
+            const tiles = document.getElementById('resTiles').textContent;
+            const note = document.getElementById('resBoxesNote').textContent;
+            const area = document.getElementById('resSurfaceArea').textContent;
+
+            const text = `Розрахунок плитки (БудКальк):\n- Потрібно: ${tiles} (${note})\n- Площа поверхні: ${area}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.textContent;

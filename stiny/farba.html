@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор розрахунку фарби онлайн — витрата в літрах на м² | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор фарби для стін і стелі: розрахунок об'єму в літрах з урахуванням кількості шарів, типу поверхні та площі вікон і дверей.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
+            <span>Розрахунок фарби</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор розрахунку фарби</h1>
+            <p>Дізнайтеся, скільки літрів фарби знадобиться для стін або стелі з урахуванням кількості шарів.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Спосіб розрахунку площі</div>
+                <div class="form-group">
+                    <label for="calcMode">Що будемо фарбувати?</label>
+                    <select id="calcMode" onchange="toggleMode()">
+                        <option value="walls">Стіни по периметру кімнати</option>
+                        <option value="ceiling">Тільки стелю (довжина × ширина)</option>
+                        <option value="manual">Вказати точну площу вручну (м²)</option>
+                    </select>
+                </div>
+
+                <!-- Блок розмірів кімнати -->
+                <div id="roomDimensions">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="roomLength">Довжина кімнати (м)</label>
+                            <input type="number" id="roomLength" value="4.5" step="0.1" min="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="roomWidth">Ширина кімнати (м)</label>
+                            <input type="number" id="roomWidth" value="3.2" step="0.1" min="0.5">
+                        </div>
+                    </div>
+                    <div class="form-group" id="heightGroup">
+                        <label for="roomHeight">Висота стін (м)</label>
+                        <input type="number" id="roomHeight" value="2.7" step="0.05" min="0.5">
+                    </div>
+                </div>
+
+                <!-- Блок ручної площі -->
+                <div id="manualDimension" style="display: none;">
+                    <div class="form-group">
+                        <label for="manualArea">Загальна площа поверхні (м²)</label>
+                        <input type="number" id="manualArea" value="40" step="0.5" min="1">
+                    </div>
+                </div>
+
+                <!-- Блок вікон і дверей (тільки для стін) -->
+                <div id="openingsBlock">
+                    <div class="form-section-title">2. Вікна та двері (віднімаються від площі)</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="winArea">Площа одного вікна (м²)</label>
+                            <input type="number" id="winArea" value="2.1" step="0.1" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="winCount">Кількість вікон (шт)</label>
+                            <input type="number" id="winCount" value="1" step="1" min="0">
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="doorArea">Площа одних дверей (м²)</label>
+                            <input type="number" id="doorArea" value="1.8" step="0.1" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="doorCount">Кількість дверей (шт)</label>
+                            <input type="number" id="doorCount" value="1" step="1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Параметри фарби та поверхні</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="surfaceType">Тип поверхні</label>
+                        <select id="surfaceType" onchange="updateRate()">
+                            <option value="0.12">Гладка шпакльована стіна (~120 мл/м²)</option>
+                            <option value="0.15">Шпалери під фарбування (~150 мл/м²)</option>
+                            <option value="0.18">Фактурна штукатурка (~180 мл/м²)</option>
+                            <option value="0.22">Бетон / цегла / дерево (~220 мл/м²)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="layers">Кількість шарів</label>
+                        <select id="layers">
+                            <option value="1">1 шар (оновлення кольору)</option>
+                            <option value="2" selected>2 шари (стандарт)</option>
+                            <option value="3">3 шари (перекриття темного)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="paintRate">Витрата на 1 шар (л/м²)</label>
+                        <input type="number" id="paintRate" value="0.12" step="0.01" min="0.05">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на втрати (%)</label>
+                        <input type="number" id="reserve" value="10" step="1" min="0" max="50">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculatePaint()">Розрахувати фарбу</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Результат розрахунку</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідний об'єм фарби</span>
+                    <strong id="resLiters">10.0 л</strong>
+                    <span id="resReserveNote">з урахуванням запасу 10%</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Чиста площа фарбування:</span>
+                        <strong id="resArea">37.7 м²</strong>
+                    </li>
+                    <li>
+                        <span>Загальна площа (з шарами):</span>
+                        <strong id="resTotalArea">75.4 м²</strong>
+                    </li>
+                    <li>
+                        <span>Без урахування запасу:</span>
+                        <strong id="resCleanLiters">9.05 л</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вага (приблизно):</span>
+                        <strong id="resWeight">13.5 кг</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Поради щодо розрахунку та нанесення фарби</h2>
+            <p>Виробники зазвичай вказують на банці витрату фарби в <strong>м²/л</strong> (наприклад, 8–10 м² з 1 літра) або в <strong>мл/м²</strong> (100–130 мл на квадратний метр) для одного шару по ідеально гладкій проґрунтованій основі.</p>
+            <ul>
+                <li><strong>Чому варто фарбувати у 2 шари:</strong> перший шар вбирається в основу та створює базовий тон, а другий робить колір насиченим і приховує сліди від валика.</li>
+                <li><strong>Економія за допомогою ґрунтовки:</strong> попереднє нанесення ґрунтовки глибокого проникнення знижує витрату дорогої інтер'єрної фарби на 15–20%.</li>
+                <li><strong>Запас 10%:</strong> частина фарби неминуче залишається у ванночці, на ворсі валика та стінках відра, тому купувати матеріал «впритул» не рекомендується.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMode() {
+            const mode = document.getElementById('calcMode').value;
+            const roomDim = document.getElementById('roomDimensions');
+            const heightGroup = document.getElementById('heightGroup');
+            const manualDim = document.getElementById('manualDimension');
+            const openingsBlock = document.getElementById('openingsBlock');
+
+            if (mode === 'walls') {
+                roomDim.style.display = 'block';
+                heightGroup.style.display = 'flex';
