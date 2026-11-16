@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://github.io
-
+Sitemap: https://bud-calc.com.ua
