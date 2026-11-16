@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://sitemaps.org">
-  <url><loc>https://vladimir402026.github.io/bud-calc/</loc><priority>1.0</priority></url>
+  <url><loc>https://bud-calc.com.ua</loc><priority>1.0</priority></url>
   
   <!-- Стіни та стеля -->
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/shpalery.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/farba.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/shtukaturka.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/shpaklivka.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/gipsokarton.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/gruntovka.html</loc><priority>0.8</priority></url>
 
   <!-- Підлога та облицювання -->
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/laminat.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/plytka.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/kley.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/styazhka.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/tepla-pidloga.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uapidloga/linoleum.html</loc><priority>0.8</priority></url>
 
   <!-- Інженерія -->
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uainzheneriya/kabel.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uainzheneriya/radiatory.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uainzheneriya/kondytsioner.html</loc><priority>0.8</priority></url>
 
   <!-- Загальні -->
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
-  <url><loc>https://github.io</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uazagalni/remont.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uazagalni/smittya.html</loc><priority>0.8</priority></url>
 </urlset>
