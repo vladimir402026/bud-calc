@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор покрівлі даху онлайн — металочерепиця та профнастил | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор покрівлі: розрахунок площі односхилого та двосхилого даху, кількості листів металочерепиці чи профнастилу, конька, вітрових планок та саморізів.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#zagalni">Загальні розрахунки</a> &rarr; 
+            <span>Калькулятор покрівлі</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор покрівлі даху</h1>
+            <p>Розрахуйте площу схилів, кількість листів металочерепиці або профнастилу, конькових планок, гідроізоляції та покрівельних саморізів.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Геометрія даху</div>
+                <div class="form-group">
+                    <label for="roofType">Тип конструкції даху</label>
+                    <select id="roofType" onchange="calculateRoof()">
+                        <option value="2" selected>Двосхилий дах (стандартний будинок)</option>
+                        <option value="1">Односхилий дах (гараж, навіс, прибудова)</option>
+                    </select>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="houseLength">Довжина будинку по стіні (м)</label>
+                        <input type="number" id="houseLength" value="10" step="0.1" min="1" max="100" oninput="calculateRoof()">
+                    </div>
+                    <div class="form-group">
+                        <label for="houseWidth">Ширина будинку по стіні (м)</label>
+                        <input type="number" id="houseWidth" value="8" step="0.1" min="1" max="100" oninput="calculateRoof()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="roofAngle">Кут нахилу даху (градуси)</label>
+                        <input type="number" id="roofAngle" value="30" step="1" min="5" max="65" oninput="calculateRoof()">
+                    </div>
+                    <div class="form-group">
+                        <label for="overhang">Карнизний та фронтонний звис (м)</label>
+                        <input type="number" id="overhang" value="0.5" step="0.05" min="0" max="1.5" oninput="calculateRoof()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Покрівельний матеріал</div>
+                <div class="form-group">
+                    <label for="materialType">Тип покриття (корисна ширина листа)</label>
+                    <select id="materialType" onchange="calculateRoof()">
+                        <option value="1.10|8" selected>Металочерепиця Monterrey (корисна ширина 1.10 м)</option>
+                        <option value="1.15|7">Профнастил покрівельний ПК-20 (корисна ширина 1.15 м)</option>
+                        <option value="1.00|8">Профнастил несучий НС-35 / НС-44 (корисна ширина 1.00 м)</option>
+                    </select>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="priceSqm">Ціна матеріалу за 1 м² (грн)</label>
+                        <input type="number" id="priceSqm" value="320" step="10" min="0" max="5000" oninput="calculateRoof()">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на підрізку та нахлест (%)</label>
+                        <input type="number" id="reserve" value="10" step="1" min="0" max="30" oninput="calculateRoof()">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateRoof()">Розрахувати покрівлю</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🏠 Результат розрахунку даху</div>
+                
+                <div class="result-main-card">
+                    <span>Загальна площа покрівлі (із запасом)</span>
+                    <strong id="resTotalArea">118.4 м²</strong>
+                    <span id="resNetArea">Чиста площа схилів: 107.6 м² (довжина скату: 5.12 м)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Кількість листів покрівлі (по довжині скату):</span>
+                        <strong id="resSheets">20 шт. (довжина листа 5.15 м)</strong>
+                    </li>
+                    <li>
+                        <span>Конькова планка (по 2 м, з урахуванням нахлесту):</span>
+                        <strong id="resRidge">6 шт. (11.0 пог. м)</strong>
+                    </li>
+                    <li>
+                        <span>Вітрова / торцева планка (по 2 м):</span>
+                        <strong id="resWind">12 шт. (20.5 пог. м)</strong>
+                    </li>
+                    <li>
+                        <span>Гідробар'єр / супердифузійна мембрана (рулон 75 м²):</span>
+                        <strong id="resMembrane">2 рулони (~124 м²)</strong>
+                    </li>
+                    <li>
+                        <span>Покрівельні саморізи (4.8×35 мм):</span>
+                        <strong id="resScrews">~950 шт. (4 уп. по 250 шт.)</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вартість покрівельного покриття:</span>
+                        <strong id="resCost">37 888 грн</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно розрахувати площу даху та кількість металочерепиці?</h2>
+            <p>Для точного розрахунку покрівлі недостатньо знати лише площу перекриття будинку — обов'язково враховується <strong>кут нахилу схилів</strong> та <strong>винос карнизних і фронтонних звисів</strong> (зазвичай по 40–60 см з кожного боку для захисту стін від дощу).</p>
+            <ul>
+                <li><strong>Корисна та повна ширина листа:</strong> стандартний лист металочерепиці має загальну ширину 1.18–1.19 м, але через бічний замок нахлесту робоча ширина складає <strong>1.10 м</strong>. Калькулятор автоматично рахує кількість рядів саме за корисною шириною.</li>
+                <li><strong>Довжина листів:</strong> при довжині схилу до 5.5–6 метрів металочерепицю чи профнастил замовляють цілими листами на всю довжину скату. Якщо скат довший за 6 метрів, лист ділять на дві частини з вертикальним нахлестом 15–20 см.</li>
+                <li><strong>Витрата саморізів:</strong> на 1 м² покрівлі витрачається в середньому 7–8 покрівельних саморізів із EPDM-прокладкою, а також додатково по 3–4 саморізи на кожен погонний метр конькових та вітрових планок.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>Який мінімальний кут нахилу для металочерепиці?</strong> Виробники рекомендують монтувати металочерепицю на дахах із кутом нахилу від 14°. Якщо дах більш пологий (від 8° до 14°), краще обрати покрівельний профнастил із вищою хвилею (ПК-20 або НС-35).</li>
+                <li><strong>Скільки закладати запасу на обрізки?</strong> Для простого односхилого або двосхилого даху достатньо 7–10% запасу. Для складних вальмових чи багатощипцевих дахів запас збільшують до 15–20%.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/pokrivlya.js"></script>
+</body>
+</html>
