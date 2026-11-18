@@ -54,14 +54,13 @@ function calculateConcrete() {
     const sandTons = (totalVolume * rec.sand) / 1000;
     const gravelTons = (totalVolume * rec.gravel) / 1000;
     const waterLiters = Math.round(totalVolume * rec.water);
-    const totalWeightTons = (totalVolume * 2.35);
+    const totalWeightTons = totalVolume * 2.35;
 
     const totalCost = totalVolume * priceM3;
     const mixersCount = Math.ceil(totalVolume / 7);
 
     document.getElementById('resTotalVolume').textContent = `${totalVolume.toFixed(2)} м³`;
     document.getElementById('resNetVolume').textContent = `Чистий об'єм опалубки: ${netVolume.toFixed(2)} м³ (вага бетону ~${totalWeightTons.toFixed(1)} т)`;
-
     document.getElementById('resCement').textContent = `${formatBetonNum(cementKg)} кг (${cementBags25} міш. по 25 кг / ${cementBags50} по 50 кг)`;
     document.getElementById('resSand').textContent = `${sandTons.toFixed(2)} т (~${(sandTons / 1.5).toFixed(2)} м³)`;
     document.getElementById('resGravel').textContent = `${gravelTons.toFixed(2)} т (~${(gravelTons / 1.4).toFixed(2)} м³)`;
