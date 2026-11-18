@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор газоблоку та цегли онлайн — розрахунок кількості блоків, м³ та клею | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор газобетону, шлакоблоку та цегли: розрахунок кількості штук і кубометрів на будинок чи перегородку, мішків клею або розчину з урахуванням вікон і дверей.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
+            <span>Газоблок та цегла</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор газоблоку та цегли</h1>
+            <p>Розрахуйте кількість газобетонних блоків, шлакоблоку або цегли в штуках і кубометрах, а також витрату клею чи цементного розчину.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Матеріал стін</div>
+                <div class="form-group">
+                    <label for="blockType">Тип блоку або цегли (довжина × товщина × висота)</label>
+                    <select id="blockType" onchange="updateMaterialDefaults()">
+                        <option value="gas_300" selected>Газоблок стіновий 600×300×200 мм (товщина стіни 300 мм)</option>
+                        <option value="gas_375">Газоблок стіновий 600×375×200 мм (товщина стіни 375 мм)</option>
+                        <option value="gas_100">Газоблок перегородковий 600×100×200 мм (товщина 100 мм)</option>
+                        <option value="slag">Шлакоблок стандартний 390×190×188 мм</option>
+                        <option value="brick_1">Цегла одинарна 250×120×65 мм (кладка в 0.5 цеглини)</option>
+                        <option value="brick_15">Цегла полуторна 250×120×88 мм (кладка в 0.5 цеглини)</option>
+                    </select>
+                </div>
+
+                <div class="form-section-title">2. Розміри стін та прорізів</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="wallPerimeter">Загальна довжина / периметр стін (м)</label>
+                        <input type="number" id="wallPerimeter" value="36" step="0.5" min="1" max="500" oninput="calculateMasonry()">
+                    </div>
+                    <div class="form-group">
+                        <label for="wallHeight">Висота стін (м)</label>
+                        <input type="number" id="wallHeight" value="3.0" step="0.1" min="0.5" max="20" oninput="calculateMasonry()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="openingsArea">Площа вікон та дверей (м²)</label>
+                        <input type="number" id="openingsArea" value="12" step="0.5" min="0" max="200" oninput="calculateMasonry()">
+                    </div>
+                    <div class="form-group">
+                        <label for="jointThickness">Товщина шва (мм)</label>
+                        <input type="number" id="jointThickness" value="3" step="1" min="1" max="20" oninput="calculateMasonry()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Ціна та запас</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="blockPrice" id="priceLabel">Ціна за 1 м³ газоблоку (грн)</label>
+                        <input type="number" id="blockPrice" value="3400" step="10" min="0" max="50000" oninput="calculateMasonry()">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на підрізку та бій (%)</label>
+                        <input type="number" id="reserve" value="5" step="1" min="0" max="25" oninput="calculateMasonry()">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateMasonry()">Розрахувати кладку</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🧱 Результат розрахунку кладки</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідна кількість (із запасом)</span>
+                    <strong id="resBlocks">824 шт.</strong>
+                    <span id="resSubInfo">Чиста площа стін: 96.0 м² | Об'єм: 30.24 м³</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Загальний об'єм кладки в кубах:</span>
+                        <strong id="resVolume">30.24 м³ (чистий: 28.80 м³)</strong>
+                    </li>
+                    <li>
+                        <span>Витрата клею або цементного розчину:</span>
+                        <strong id="resMortar">29 мішків по 25 кг (~720 кг)</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна кількість піддонів:</span>
+                        <strong id="resPallets">~17 піддонів</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вартість блоків/цегли:</span>
+                        <strong id="resCost">102 816 грн</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно порахувати газоблок або цеглу на будинок?</h2>
+            <p>Для точного замовлення стінових матеріалів розрахунок завжди ведуть за <strong>чистою площею стін</strong>, віднімаючи площу віконних і дверних прорізів, а потім додають <strong>5–7% запасу</strong> на підрізку під час перев'язки рядів та фронтонів.</p>
+            <ul>
+                <li><strong>Скільки газоблоків в 1 кубі:</strong> в 1 м³ міститься рівно <strong>27.78 стандартних блоків</strong> розміром 600×300×200 мм або <strong>22.22 блоки</strong> розміром 600×375×200 мм.</li>
+                <li><strong>Витрата клею для газобетону:</strong> при тонкошовній кладці (шов 2–3 мм) витрачається в середньому 1 мішок сухого клею (25 кг) на кожен 1 м³ кладки.</li>
+                <li><strong>Кладка в одну цеглину (товщина 250 мм):</strong> якщо ви будуєте несучу стіну з цегли товщиною 250 мм замість перегородки в півцеглини (120 мм), просто помножте отриману кількість цегли та розчину на 2.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>Яку товщину газоблоку обрати для житлового будинку?</strong> Для більшості регіонів України оптимальною є стіна товщиною 375–400 мм (марка міцності D400 або D500) — такий будинок часто не потребує додаткового зовнішнього утеплення.</li>
+                <li><strong>Скільки одинарної цегли в 1 м² кладки?</strong> При кладці в півцеглини (товщина 120 мм) зі швом 10 мм на 1 м² стіни йде приблизно 51–52 цеглини, а при кладці в одну цеглину (250 мм) — 102–104 цеглини.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/kladka.js"></script>
+</body>
+</html>
