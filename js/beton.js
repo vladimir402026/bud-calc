@@ -38,7 +38,6 @@ function calculateConcrete() {
 
     const totalVolume = netVolume * (1 + reserve / 100);
 
-    // Склад на 1 м³ бетону (цемент ПЦ-400 у кг, пісок у кг, щебінь у кг, вода у л)
     const recipes = {
         'M150': { cement: 230, sand: 860, gravel: 1120, water: 175, ratio: '1 : 3.7 : 4.9' },
         'M200': { cement: 280, sand: 810, gravel: 1100, water: 180, ratio: '1 : 2.9 : 3.9' },
