@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор бетону та фундаменту онлайн — розрахунок у м³, цемент, пісок і щебінь | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор бетону на стрічковий фундамент, монолітну плиту та стовпчики: розрахунок кубів бетону, пропорцій цементу, піску та щебеню для марок М150, М200, М250, М300.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#zagalni">Загальні розрахунки</a> &rarr; 
+            <span>Бетон та фундамент</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор бетону та фундаменту</h1>
+            <p>Розрахуйте об'єм бетону в кубометрах для стрічкового фундаменту, плити або паль, а також точну кількість цементу, піску та щебеню.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Тип конструкції</div>
+                <div class="form-group">
+                    <label for="foundationType">Що будемо заливати?</label>
+                    <select id="foundationType" onchange="toggleFoundationType()">
+                        <option value="strip" selected>Стрічковий фундамент або ростверк</option>
+                        <option value="slab">Монолітна плита, відмостка або майданчик</option>
+                        <option value="piles">Стовпчастий фундамент / буронабивні палі</option>
+                    </select>
+                </div>
+
+                <!-- Блок 1: Стрічковий фундамент -->
+                <div id="stripBlock">
+                    <div class="form-group">
+                        <label for="stripLength">Загальна довжина стрічки (всі зовнішні + внутрішні стіни, м)</label>
+                        <input type="number" id="stripLength" value="44" step="0.5" min="1" max="1000" oninput="calculateConcrete()">
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="stripWidth">Ширина стрічки (см)</label>
+                            <input type="number" id="stripWidth" value="40" step="5" min="10" max="200" oninput="calculateConcrete()">
+                        </div>
+                        <div class="form-group">
+                            <label for="stripHeight">Загальна висота стрічки (см)</label>
+                            <input type="number" id="stripHeight" value="100" step="5" min="10" max="400" oninput="calculateConcrete()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 2: Монолітна плита -->
+                <div id="slabBlock" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="slabLength">Довжина плити / майданчика (м)</label>
+                            <input type="number" id="slabLength" value="10" step="0.1" min="0.5" max="200" oninput="calculateConcrete()">
+                        </div>
+                        <div class="form-group">
+                            <label for="slabWidth">Ширина плити / майданчика (м)</label>
+                            <input type="number" id="slabWidth" value="8" step="0.1" min="0.5" max="200" oninput="calculateConcrete()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slabThickness">Товщина бетонної плити (см)</label>
+                        <input type="number" id="slabThickness" value="20" step="1" min="5" max="100" oninput="calculateConcrete()">
+                    </div>
+                </div>
+
+                <!-- Блок 3: Стовпці / палі -->
+                <div id="pilesBlock" style="display: none;">
+                    <div class="form-group">
+                        <label for="pilesCount">Кількість стовпчиків або паль (шт)</label>
+                        <input type="number" id="pilesCount" value="24" step="1" min="1" max="500" oninput="calculateConcrete()">
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pileDiameter">Діаметр стовпа / бура (см)</label>
+                            <input type="number" id="pileDiameter" value="30" step="5" min="10" max="150" oninput="calculateConcrete()">
+                        </div>
+                        <div class="form-group">
+                            <label for="pileDepth">Глибина / висота стовпа (м)</label>
+                            <input type="number" id="pileDepth" value="1.5" step="0.1" min="0.2" max="15" oninput="calculateConcrete()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Марка бетону та вартість</div>
+                <div class="form-group">
+                    <label for="concreteGrade">Марка міцності бетону</label>
+                    <select id="concreteGrade" onchange="calculateConcrete()">
+                        <option value="M150">М150 (В12.5) — підбетонка, доріжки, легкі паркани</option>
+                        <option value="M200" selected>М200 (В15) — відмостка, підлога по ґрунту, гараж</option>
+                        <option value="M250">М250 (В20) — стрічковий фундамент приватного будинку</option>
+                        <option value="M300">М300 (В22.5) — монолітні плити, перекриття, сходи</option>
+                    </select>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="priceM3">Ціна готового бетону за 1 м³ (грн)</label>
+                        <input type="number" id="priceM3" value="3100" step="50" min="0" max="20000" oninput="calculateConcrete()">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на ущільнення та розширення опалубки (%)</label>
+                        <input type="number" id="reserve" value="5" step="1" min="0" max="20" oninput="calculateConcrete()">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateConcrete()">Розрахувати бетон</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🏗️ Результат розрахунку бетону</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідний об'єм бетону (із запасом)</span>
+                    <strong id="resTotalVolume">18.48 м³</strong>
+                    <span id="resNetVolume">Чистий об'єм опалубки: 17.60 м³ (вага бетону ~43.4 т)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Цемент (марки М400) для самозамісу:</span>
+                        <strong id="resCement">5 174 кг (207 міш. по 25 кг / 104 по 50 кг)</strong>
+                    </li>
+                    <li>
+                        <span>Річковий або кар'єрний пісок:</span>
+                        <strong id="resSand">14.97 т (~9.98 м³)</strong>
+                    </li>
+                    <li>
+                        <span>Щебінь (фракція 5–20 мм):</span>
+                        <strong id="resGravel">20.33 т (~14.52 м³)</strong>
+                    </li>
+                    <li>
+                        <span>Пропорція по масі (Цемент : Пісок : Щебінь):</span>
+                        <strong id="resRatio">1 : 2.9 : 3.9 (вода: ~3 326 л)</strong>
+                    </li>
+                    <li>
+                        <span>Якщо замовляти товарний бетон:</span>
+                        <strong id="resMixer">3 міксер(и) по 7 м³</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вартість товарного бетону:</span>
+                        <strong id="resCost">57 288 грн</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно розрахувати об'єм бетону на фундамент?</h2>
+            <p>При замовленні товарного бетону в автобетонозмішувачах або підготовці компонентів для самостійного замішування завжди закладають <strong>5–7% технологічного запасу</strong>. Це компенсує ущільнення суміші під час вібрування, нерівності траншеї та невеликий прогин дерев'яної опалубки.</p>
+            <ul>
+                <li><strong>Стрічковий фундамент:</strong> об'єм рахується множенням загальної довжини всіх зовнішніх і внутрішніх несучих стін на ширину та висоту стрічки.</li>
+                <li><strong>Вибір марки бетону:</strong> для відмостки, садових доріжок та підлоги в гаражі достатньо марки <strong>М200</strong>. Для несучого фундаменту одно- або двоповерхового будинку використовують марку <strong>М250 або М300</strong>.</li>
