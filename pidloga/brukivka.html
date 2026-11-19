@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор тротуарної плитки та бруківки онлайн — розрахунок площі, бордюрів, піску і щебеню | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор тротуарної плитки та бруківки (Старе місто, Цеглинка): розрахунок квадратури із запасом, кількості бордюрів, щебеню, піску та цементу для гарцівки.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#pidloga">Підлога та облицювання</a> &rarr; 
+            <span>Тротуарна плитка та бруківка</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор тротуарної плитки та бруківки</h1>
+            <p>Розрахуйте кількість бруківки в м² із запасом на підрізку, кількість тротуарних бордюрів (поребриків), а також щебінь, пісок і цемент для основи.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Тип бруківки та навантаження</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pavingType">Вид та товщина плитки</label>
+                        <select id="pavingType" onchange="updateBrukPrice()">
+                            <option value="brick_40">Цеглинка (200×100×40 мм) — пішохідна</option>
+                            <option value="brick_60">Цеглинка (200×100×60 мм) — під авто</option>
+                            <option value="old_city_40" selected>Старе місто (40 мм) — пішохідна</option>
+                            <option value="old_city_60">Старе місто (60 мм) — під авто</option>
+                            <option value="square_300">Тротуарна плитка 300×300×30 мм</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="baseType">Призначення майданчика</label>
+                        <select id="baseType" onchange="calculatePaving()">
+                            <option value="walk" selected>Садові доріжки, двір, відмостка</option>
+                            <option value="car">Парковка, заїзд для легкового авто</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Розміри ділянки та бордюрів</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pavingArea">Площа мощення (м²)</label>
+                        <input type="number" id="pavingArea" value="65" step="0.5" min="1" max="5000" oninput="calculatePaving()">
+                    </div>
+                    <div class="form-group">
+                        <label for="borderLength">Довжина тротуарного бордюру (пог. м)</label>
+                        <input type="number" id="borderLength" value="38" step="0.5" min="0" max="2000" oninput="calculatePaving()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Ціна та запас</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tilePrice">Ціна бруківки за 1 м² (грн)</label>
+                        <input type="number" id="tilePrice" value="440" step="10" min="0" max="5000" oninput="calculatePaving()">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на підрізку (%)</label>
+                        <input type="number" id="reserve" value="7" step="1" min="0" max="25" oninput="calculatePaving()">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculatePaving()">Розрахувати бруківку</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🧱 Результат розрахунку мощення</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідна площа бруківки (із запасом)</span>
+                    <strong id="resTotalArea">69.6 м²</strong>
+                    <span id="resSubInfo">Чиста площа: 65.0 м² | Запас: 7% (+4.6 м²)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Тротуарний бордюр (поребрик із запасом 5%):</span>
+                        <strong id="resBorders">40 шт. по 1 м (або 80 шт. по 0.5 м)</strong>
+                    </li>
+                    <li>
+                        <span>Щебінь для подушки (фракція 5–20 / 20–40 мм):</span>
+                        <strong id="resGravel">11.38 т (~8.13 м³)</strong>
+                    </li>
+                    <li>
+                        <span>Пісок річковий (для гарцівки + засипка швів):</span>
+                        <strong id="resSand">5.61 т (~3.74 м³) + 260 кг для швів</strong>
+                    </li>
+                    <li>
+                        <span>Цемент (М400) для гарцівки та бордюрів:</span>
+                        <strong id="resCement">880 кг (36 мішків по 25 кг)</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вартість самої бруківки:</span>
+                        <strong id="resCost">30 602 грн</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно розрахувати бруківку та підготовку основи?</h2>
+            <p>Щоб тротуарна плитка не просідала після першої зими, важливо правильно підібрати її товщину та «пиріг» основи залежно від майбутнього навантаження.</p>
+            <ul>
+                <li><strong>Вибір товщини бруківки:</strong> для садових доріжок, відмостки навколо будинку та пішохідних зон підходить плитка товщиною <strong>40 мм</strong>. Для парковки та заїзду легкового автомобіля обирають бруківку товщиною <strong>60 мм</strong>.</li>
+                <li><strong>Запас на підрізку:</strong> для прямокутних доріжок закладають <strong>5–7%</strong> запасу. Якщо ви плануєте діагональну укладку, радіусні доріжки або візерунки з кількох кольорів, додавайте <strong>10–12%</strong>.</li>
+                <li><strong>Склад гарцівки (цементно-піщаної суміші):</strong> зазвичай готують суху суміш у пропорції <strong>1 частина цементу М400 на 5 частин просіяного піску</strong> шаром 4–5 см.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>Скільки важить 1 м² бруківки?</strong> Квадратний метр вібропресованої бруківки товщиною 40 мм важить близько <strong>90–95 кг</strong>, а товщиною 60 мм — близько <strong>135–140 кг</strong>.</li>
+                <li><strong>Чим засипати шви між тротуарною плиткою?</strong> Для заповнення швів використовують чистий сухий річковий або кварцовий пісок без домішок глини, щоб між плиткою не проростала трава.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/brukivka.js"></script>
+</body>
+</html>
