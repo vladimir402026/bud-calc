@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор утеплення фасаду онлайн — розрахунок пінопласту, мінвати, клею, сітки та короїду | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор утеплення фасаду будинку: розрахунок листів пінопласту або мінеральної вати, мішків клею для приклеювання та армування, армуючої сітки, дюбелів-парасольок та декоративної штукатурки.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
+            <span>Утеплення фасаду</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор утеплення фасаду (пінопласт та мінвата)</h1>
+            <p>Розрахуйте повний комплект матеріалів для утеплення будинку: кількість листів утеплювача в м² і м³, мішків клею, армуючу сітку, дюбелі та штукатурку «короїд».</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Матеріал та товщина утеплення</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="insulationType">Тип утеплювача</label>
+                        <select id="insulationType" onchange="updateFacadeDefaults()">
+                            <option value="eps" selected>Пінопласт фасадний ПСБ-С-25 (1000×500 мм)</option>
+                            <option value="wool">Мінеральна вата фасадна (1000×600 мм)</option>
+                            <option value="xps">Екструдований пінополістирол ЕППС (1200×600 мм)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="thicknessMm">Товщина утеплювача (мм)</label>
+                        <select id="thicknessMm" onchange="calculateFacade()">
+                            <option value="50">50 мм (5 см)</option>
+                            <option value="100" selected>100 мм (10 см — стандарт)</option>
+                            <option value="120">120 мм (12 см)</option>
+                            <option value="150">150 мм (15 см — енергоефективний)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Розміри фасаду будинку</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="wallPerimeter">Периметр зовнішніх стін (м)</label>
+                        <input type="number" id="wallPerimeter" value="38" step="0.5" min="1" max="1000" oninput="calculateFacade()">
+                    </div>
+                    <div class="form-group">
+                        <label for="wallHeight">Середня висота стін (м)</label>
+                        <input type="number" id="wallHeight" value="3.2" step="0.1" min="0.5" max="30" oninput="calculateFacade()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="openingsArea">Загальна площа вікон та дверей (м²)</label>
+                    <input type="number" id="openingsArea" value="14" step="0.5" min="0" max="500" oninput="calculateFacade()">
+                </div>
+
+                <div class="form-section-title">3. Ціна та запас</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="insulationPrice">Ціна утеплювача за 1 м³ (грн)</label>
+                        <input type="number" id="insulationPrice" value="1850" step="50" min="0" max="50000" oninput="calculateFacade()">
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на підрізку листів (%)</label>
+                        <input type="number" id="reserve" value="7" step="1" min="0" max="25" oninput="calculateFacade()">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateFacade()">Розрахувати утеплення</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🏠 Результат розрахунку фасаду</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідна кількість утеплювача (із запасом)</span>
+                    <strong id="resSheets">231 листів (115.1 м²)</strong>
+                    <span id="resSubInfo">Чиста площа фасаду: 107.6 м² | Об'єм: 11.51 м³</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Клей для приклеювання та армування:</span>
+                        <strong id="resGlue">41 мішків по 25 кг (~1 022 кг)</strong>
+                    </li>
+                    <li>
+                        <span>Армуюча фасадна склосітка (160 г/м²):</span>
+                        <strong id="resMesh">124 м² (3 рул. по 50 м²)</strong>
+                    </li>
+                    <li>
+                        <span>Дюбелі-«парасольки» для теплоізоляції:</span>
+                        <strong id="resDowels">646 шт. (довжина 160–180 мм)</strong>
+                    </li>
+                    <li>
+                        <span>Декоративна штукатурка («короїд» / «баранчик»):</span>
+                        <strong id="resPlaster">13 відер по 25 кг (~301 кг)</strong>
+                    </li>
+                    <li>
+                        <span>Цокольний стартовий профіль:</span>
+                        <strong id="resProfile">16 планок по 2.5 м (38.0 пог. м)</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовна вартість самого утеплювача:</span>
+                        <strong id="resCost">21 300 грн</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно порахувати матеріали для утеплення фасаду?</h2>
+            <p>Технологія «мокрого фасаду» передбачає не лише купівлю плит пінопласту чи мінеральної вати, а й цілого комплексу супутніх матеріалів. Якщо не врахувати їх заздалегідь, витрати на клей, сітку та штукатурку можуть стати несподіванкою.</p>
+            <ul>
+                <li><strong>Що обрати — пінопласт чи мінвату?</strong> Пінопласт (ПСБ-С-25) дешевший і легший у монтажі, чудово підходить для цегляних і бетонних стін. Мінеральна вата («базальтова») негорюча та паропроникна — її рекомендують для газоблоку, ракушняка та дерев'яних будинків.</li>
+                <li><strong>Як підібрати довжину дюбеля-«парасольки»:</strong> до товщини утеплювача додають шар клею (10 мм), товщину старої штукатурки (за наявності) та мінімум <strong>50 мм</strong> для надійної фіксації в несучій стіні. Наприклад, для утеплювача 100 мм потрібен дюбель довжиною <strong>160–180 мм</strong>.</li>
+                <li><strong>Витрата клейової суміші:</strong> приблизно 4.5–5 кг сухого клею йде на приклеювання листів до стіни і ще стільки ж — на створення армуючого шару із втопленням фасадної сітки.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>Яку товщину утеплювача обрати для стін будинку?</strong> Для кліматичної зони України оптимальною товщиною утеплення зовнішніх стін є <strong>100–150 мм</strong>. Тонший шар (50 мм) зазвичай використовують лише для цоколя або внутрішніх балконів.</li>
+                <li><strong>Скільки листів пінопласту в 1 кубі?</strong> В 1 м³ міститься рівно <strong>20 листів</strong> розміром 1000×500 мм товщиною 100 мм або <strong>40 листів</strong> товщиною 50 мм.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/uteplyuvach.js"></script>
+</body>
+</html>
