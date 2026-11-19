@@ -245,3 +245,40 @@
             const screwsMetal = Math.ceil(hangers * 2 + crabs * 4 + udCount * 4);
 
             // Вивід результатів
+                        // Вивід результатів
+            document.querySelectorAll('.pLen').forEach(el => el.textContent = profileLen);
+            document.getElementById('resSheets').textContent = sheets + ' шт.';
+            document.getElementById('resAreaNote').textContent = `площа поверхні ${area.toFixed(1)} м²`;
+            document.getElementById('resUD').textContent = `${udCount} шт. (~${Math.ceil(udMeters)} м)`;
+            document.getElementById('resCD').textContent = `${cdCount} шт. (~${Math.ceil(cdMeters * 1.1)} м)`;
+            document.getElementById('resHangers').textContent = hangers + ' шт.';
+            document.getElementById('resCrabs').textContent = crabs + ' шт.';
+            document.getElementById('resDowels').textContent = dowels + ' шт.';
+            document.getElementById('resScrewsGKL').textContent = screwsGKL + ' шт.';
+            document.getElementById('resScrewsMetal').textContent = screwsMetal + ' шт.';
+        }
+
+        function copyResults() {
+            const text = `Розрахунок гіпсокартону та профілю (БудКальк):\n` +
+                         `• Листи ГКЛ: ${document.getElementById('resSheets').textContent} (${document.getElementById('resAreaNote').textContent})\n` +
+                         `• Профіль UD: ${document.getElementById('resUD').textContent}\n` +
+                         `• Профіль CD: ${document.getElementById('resCD').textContent}\n` +
+                         `• Прямі підвіси: ${document.getElementById('resHangers').textContent}\n` +
+                         `• З'єднувачі «Краб»: ${document.getElementById('resCrabs').textContent}\n` +
+                         `• Дюбель-цвяхи: ${document.getElementById('resDowels').textContent}\n` +
+                         `• Саморізи по металу 3.5×25: ${document.getElementById('resScrewsGKL').textContent}\n` +
+                         `• Саморізи «блошки» 3.5×9.5: ${document.getElementById('resScrewsMetal').textContent}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const orig = btn.textContent;
+                btn.textContent = '✅ Скопійовано!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', calculateDrywall);
+    </script>
+</body>
+</html>
+
