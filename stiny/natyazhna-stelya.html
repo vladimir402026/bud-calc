@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор натяжної стелі онлайн — розрахунок вартості з роботою, профілем та світильниками | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор натяжної стелі: розрахунок ціни за м² (матова, глянцева, сатин, тканинна), багета по периметру, кутів, точкових світильників, люстри та обходу труб.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#stiny">Стіни та стеля</a> &rarr; 
+            <span>Натяжна стеля</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор натяжної стелі під ключ</h1>
+            <p>Розрахуйте попередню вартість натяжної стелі з урахуванням полотна, стінового профілю (багета), декоративної вставки, кутів, світильників та труб.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Розміри кімнати</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="roomLength">Довжина кімнати (м)</label>
+                        <input type="number" id="roomLength" value="4.5" step="0.1" min="0.5" max="50" oninput="calculateCeiling()">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomWidth">Ширина кімнати (м)</label>
+                        <input type="number" id="roomWidth" value="3.4" step="0.1" min="0.5" max="50" oninput="calculateCeiling()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Тип полотна та ціна</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="ceilingType">Вид полотна</label>
+                        <select id="ceilingType" onchange="updateCeilingPrice()">
+                            <option value="pvc_mat" selected>ПВХ матова або сатинова (стандарт)</option>
+                            <option value="pvc_gloss">ПВХ глянцева (лакова)</option>
+                            <option value="pvc_premium">Преміум ПВХ (MSD Evolution / безщілинна)</option>
+                            <option value="fabric">Тканинна стеля (Descor / Clipso)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="priceM2">Ціна полотна з монтажем за 1 м² (грн)</label>
+                        <input type="number" id="priceM2" value="280" step="10" min="50" max="5000" oninput="calculateCeiling()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">3. Кути, світильники та комунікації</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cornersCount">Кількість кутів у кімнаті (шт.)</label>
+                        <input type="number" id="cornersCount" value="4" step="1" min="4" max="30" oninput="calculateCeiling()">
+                    </div>
+                    <div class="form-group">
+                        <label for="includeInsert">Декоративна маскувальна вставка</label>
+                        <select id="includeInsert" onchange="calculateCeiling()">
+                            <option value="yes" selected>Так, додати по периметру</option>
+                            <option value="no">Ні (тіньовий профіль / без вставки)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="spotsCount">Точкові світильники (шт.)</label>
+                        <input type="number" id="spotsCount" value="6" step="1" min="0" max="100" oninput="calculateCeiling()">
+                    </div>
+                    <div class="form-group">
+                        <label for="chandelierCount">Люстри на гачку або планці (шт.)</label>
+                        <input type="number" id="chandelierCount" value="1" step="1" min="0" max="10" oninput="calculateCeiling()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pipesCount">Кількість труб опалення, що йдуть у стелю (шт.)</label>
+                    <input type="number" id="pipesCount" value="1" step="1" min="0" max="20" oninput="calculateCeiling()">
+                </div>
+
+                <button class="btn-calc" onclick="calculateCeiling()">Розрахувати стелю</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">✨ Попередній кошторис стелі</div>
+                
+                <div class="result-main-card">
+                    <span>Орієнтовна вартість під ключ</span>
+                    <strong id="resTotalCost">7 922 грн</strong>
+                    <span id="resSubInfo">Площа стелі: 15.3 м² | Периметр: 15.8 пог. м</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Полотно з базовим монтажем:</span>
+                        <strong id="resCanvasCost">4 284 грн (15.3 м² × 280 грн)</strong>
+                    </li>
+                    <li>
+                        <span>Витрата стінового профілю (багету):</span>
+                        <strong id="resProfile">15.8 пог. м (~7 планок по 2.5 м, ~88 дюбелів)</strong>
+                    </li>
+                    <li>
+                        <span>Профіль по периметру та вставка:</span>
+                        <strong id="resPerimeterCost">2 212 грн (багет + вставка)</strong>
+                    </li>
+                    <li>
+                        <span>Додаткові роботи (світло, труби, кути):</span>
+                        <strong id="resExtrasCost">1 480 грн (світло, труби, кути)</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати кошторис</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>З чого складається ціна натяжної стелі?</h2>
+            <p>Багато компаній вказують у рекламі лише вартість самого квадратного метра плівки, але фінальний чек формується з кількох обов'язкових позицій:</p>
+            <ul>
+                <li><strong>Полотно та розкрій:</strong> розраховується за площею приміщення. Матова та сатинова плівка ПВХ є найпопулярнішим і найдоступнішим варіантом для житлових кімнат, тоді як тканинні полотна коштують дорожче, але монтуються без нагрівання тепловою гарматою.</li>
+                <li><strong>Стіновий профіль (багет) та вставка:</strong> кріпиться по всьому периметру кімнати з кроком дюбелів 15–20 см. Гнучка гумова вставка закриває технологічний зазор між стіною та стелею.</li>
+                <li><strong>Закладні під освітлення та обхід труб:</strong> під кожен точковий світильник або люстру під полотном встановлюється термокільце та монтажна платформа, а місця проходження труб опалення акуратно огинаються пластиковим обводом.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>На скільки сантиметрів опуститься стеля?</strong> При стандартному кріпленні на стіновий багет стеля опускається мінімум на <strong>3.5–5 см</strong> від найнижчого кута перекриття (або на висоту корпусу вбудованих точкових світильників — зазвичай 6–8 см).</li>
+                <li><strong>Коли краще встановлювати натяжну стелю — до чи після шпалер?</strong> Монтаж стелі зазвичай виконують <strong>після поклейки шпалер або фарбування стін</strong> (монтажники використовують перфоратори з пилососами), а гнучку маскувальну вставку вставляють уже в самому кінці ремонту.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/natyazhna-stelya.js"></script>
+</body>
+</html>
