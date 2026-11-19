@@ -10,8 +10,8 @@
   <url><loc>https://bud-calc.com.uastiny/gipsokarton.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uastiny/gruntovka.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uastiny/kladka.html</loc><priority>0.8</priority></url>
-    <url><loc>https://bud-calc.com.ua</loc><priority>0.8</priority></url>
-
+  <url><loc>https://bud-calc.com.uastiny/uteplyuvach.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.uastiny/natyazhna-stelya.html</loc><priority>0.8</priority></url>
 
   <!-- Підлога та облицювання -->
   <url><loc>https://bud-calc.com.uapidloga/laminat.html</loc><priority>0.8</priority></url>
@@ -20,8 +20,7 @@
   <url><loc>https://bud-calc.com.uapidloga/styazhka.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uapidloga/tepla-pidloga.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uapidloga/linoleum.html</loc><priority>0.8</priority></url>
-    <url><loc>https://bud-calc.com.ua</loc><priority>0.8</priority></url>
-
+  <url><loc>https://bud-calc.com.uapidloga/brukivka.html</loc><priority>0.8</priority></url>
 
   <!-- Інженерія -->
   <url><loc>https://bud-calc.com.uainzheneriya/kabel.html</loc><priority>0.8</priority></url>
@@ -33,6 +32,5 @@
   <url><loc>https://bud-calc.com.uazagalni/smittya.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uazagalni/pokrivlya.html</loc><priority>0.8</priority></url>
   <url><loc>https://bud-calc.com.uazagalni/beton.html</loc><priority>0.8</priority></url>
-    <url><loc>https://bud-calc.com.ua</loc><priority>0.8</priority></url>
-
+  <url><loc>https://bud-calc.com.uazagalni/skhody.html</loc><priority>0.8</priority></url>
 </urlset>
