@@ -9,7 +9,7 @@ function updateCeilingPrice() {
     const defaultPrices = {
         'pvc_mat': 280,     // ПВХ мат / сатин стандарт
         'pvc_gloss': 310,   // ПВХ глянець
-        'pvc_premium': 390, // Преміум MSD Evolution / безщілинна
+        'pvc_premium': 390, // Преміум ПВХ MSD Evolution / безщілинна
         'fabric': 750       // Тканинна стеля (Descor / Clipso)
     };
 
@@ -50,9 +50,9 @@ function calculateCeiling() {
     // Загальна сума під ключ
     const totalCost = canvasCost + perimeterCost + cornersCost + spotsCost + chandelierCost + pipesCost;
 
-    // Кількість планок багету (по 2.5 м) та дюбелів (крок 15-20 см)
+    // Кількість планок ПВХ-багету (по 2.5 м) та дюбелів (крок 10 см = 25 шт. на планку)
     const profileBars = Math.ceil(perimeter / 2.5);
-    const dowelsCount = Math.ceil(perimeter / 0.18);
+    const dowelsCount = profileBars * 25;
 
     document.getElementById('resTotalCost').textContent = `${formatCeilNum(totalCost)} грн`;
     document.getElementById('resSubInfo').textContent = `Площа стелі: ${area.toFixed(1)} м² | Периметр: ${perimeter.toFixed(1)} пог. м`;
@@ -67,7 +67,7 @@ function copyResults() {
                  `• Орієнтовна вартість під ключ: ${document.getElementById('resTotalCost').textContent}\n` +
                  `• ${document.getElementById('resSubInfo').textContent}\n` +
                  `• Полотно з монтажем: ${document.getElementById('resCanvasCost').textContent}\n` +
-                 `• Стіновий профіль (багет): ${document.getElementById('resProfile').textContent}\n` +
+                 `• Стіновий профіль (ПВХ багет): ${document.getElementById('resProfile').textContent}\n` +
                  `• Вартість профілю та вставки: ${document.getElementById('resPerimeterCost').textContent}\n` +
                  `• Додаткові роботи (світильники, труби, кути): ${document.getElementById('resExtrasCost').textContent}`;
 
