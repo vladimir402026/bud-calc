@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор сходів онлайн — розрахунок сходинок, кута нахилу та косоура | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор сходів на другий поверх: розрахунок кількості, висоти та глибини сходинок, кута нахилу, довжини косоура і перевірка зручності за формулою Блонделя.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#zagalni">Загальні розрахунки</a> &rarr; 
+            <span>Калькулятор сходів</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор сходів на другий поверх</h1>
+            <p>Розрахуйте точні розміри сходинок, кут нахилу маршу, довжину косоура (тятиви) та перевірте зручність підйому за формулою кроку.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Габарити отвору та висота</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="openingHeight">Висота від підлоги 1-го до підлоги 2-го поверху (см)</label>
+                        <input type="number" id="openingHeight" value="285" step="1" min="50" max="1000" oninput="calculateStairs()">
+                    </div>
+                    <div class="form-group">
+                        <label for="openingLength">Довжина прорізу в плані (см)</label>
+                        <input type="number" id="openingLength" value="390" step="5" min="50" max="1500" oninput="calculateStairs()">
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Параметри сходинок</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="stepsCount">Кількість підйомів (сходинок), шт.</label>
+                        <input type="number" id="stepsCount" value="16" step="1" min="2" max="50" oninput="calculateStairs()">
+                    </div>
+                    <div class="form-group">
+                        <label for="stepNosing">Виступ (звіс) сходинки (см)</label>
+                        <input type="number" id="stepNosing" value="3" step="0.5" min="0" max="10" oninput="calculateStairs()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stairWidth">Ширина маршу сходів (см)</label>
+                    <input type="number" id="stairWidth" value="95" step="5" min="50" max="300" oninput="calculateStairs()">
+                </div>
+
+                <button class="btn-calc" onclick="calculateStairs()">Розрахувати сходи</button>
+            </div>
+
+            <div class="calc-result-box">
+                <div class="result-header">🪜 Результат розрахунку сходів</div>
+                
+                <div class="result-main-card">
+                    <span>Розмір сходинки (висота × повна глибина)</span>
+                    <strong id="resStepSize">17.8 × 29.0 см</strong>
+                    <span id="resSubInfo">Висота підсходинки: 17.8 см | Робоча проступ: 26.0 см (+3 см виступ)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Кут нахилу сходів:</span>
+                        <strong id="resAngle">36.2° (рекомендовано 30°–38°)</strong>
+                    </li>
+                    <li>
+                        <span>Довжина косоура / тятиви:</span>
+                        <strong id="resStringer">4.83 м (483 см)</strong>
+                    </li>
+                    <li>
+                        <span>Кількість сходинок для виготовлення:</span>
+                        <strong id="resTreadsCount">15 сходинок + вихід на перекриття</strong>
+                    </li>
+                    <li>
+                        <span>Площа матеріалу сходинок (дерево / плитка):</span>
+                        <strong id="resArea">4.13 м² (при ширині 95 см)</strong>
+                    </li>
+                    <li>
+                        <span>Перевірка зручності та безпеки:</span>
+                        <strong id="resComfort">✅ Ідеально зручні сходи (формула кроку: 61.6 см при нормі 60–64 см)</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як правильно розрахувати зручні сходи на другий поверх?</h2>
+            <p>Щоб підйом і спуск по сходах не викликали втоми та були безпечними для дітей і літніх людей, під час проектування використовують <strong>формулу Блонделя (формулу кроку)</strong>: подвоєна висота підсходинки плюс робоча ширина проступі мають дорівнювати <strong>60–64 см</strong> (середній крок людини).</p>
+            <ul>
+                <li><strong>Оптимальна висота підсходинки:</strong> <strong>16–18.5 см</strong>. Якщо зробити її вищою за 20 см, підніматися стане важко.</li>
+                <li><strong>Оптимальна робоча глибина сходинки:</strong> <strong>26–30 см</strong>, щоб ступня дорослої людини повністю ставала на поверхню без звисання п'яти.</li>
+                <li><strong>Кут нахилу маршу:</strong> для житлових будинків найкращим вважається нахил <strong>30°–38°</strong>. Сходи з кутом понад 42° підходять лише для технічних приміщень, підвалів або горищ.</li>
+            </ul>
+
+            <h3>Часті запитання (FAQ)</h3>
+            <ul>
+                <li><strong>Чому сходинок для виготовлення на 1 менше, ніж підйомів?</strong> Останнім, верхнім кроком людина стає вже безпосередньо на чисту підлогу другого поверху, тому окрема накладна сходинка там зазвичай не потрібна.</li>
+                <li><strong>Яку мінімальну висоту просвіту над головою залишати?</strong> Від будь-якої сходинки вертикально вгору до краю перекриття має залишатися не менше <strong>200–210 см</strong>, щоб висока людина не зачіпала стелю головою.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script src="../js/skhody.js"></script>
+</body>
+</html>
