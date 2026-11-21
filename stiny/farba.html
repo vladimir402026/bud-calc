@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор розрахунку фарби онлайн — витрата в літрах на м² | БудКальк</title>
-    <meta name="description" content="Точний онлайн-калькулятор фарби для стін і стелі: розрахунок об'єму в літрах з урахуванням кількості шарів, типу поверхні та площі вікон і дверей.">
+    <title>Калькулятор розходу фарби на м² — розрахунок фасадної та інтер'єрної фарби | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор розходу фарби на 1 м² для стін, стелі та фасаду. Таблиця норм витрат фасадної фарби по гладкій штукатурці та короїду, розрахунок у літрах.">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -32,8 +32,8 @@
         </div>
 
         <div class="page-header">
-            <h1>Калькулятор розрахунку фарби</h1>
-            <p>Дізнайтеся, скільки літрів фарби знадобиться для стін або стелі з урахуванням кількості шарів.</p>
+            <h1>Калькулятор розходу фарби на м²</h1>
+            <p>Дізнайтеся, скільки літрів інтер'єрної або фасадної фарби знадобиться на 1 м² та всю площу з урахуванням кількості шарів.</p>
         </div>
 
         <div class="calc-wrapper">
@@ -46,7 +46,7 @@
                     <select id="calcMode" onchange="toggleMode()">
                         <option value="walls">Стіни по периметру кімнати</option>
                         <option value="ceiling">Тільки стелю (довжина × ширина)</option>
-                        <option value="manual">Вказати точну площу вручну (м²)</option>
+                        <option value="manual">Вказати точну площу вручну (м² — зручно для фасаду)</option>
                     </select>
                 </div>
 
@@ -54,11 +54,11 @@
                 <div id="roomDimensions">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="roomLength">Довжина кімнати (м)</label>
+                            <label for="roomLength">Довжина (м)</label>
                             <input type="number" id="roomLength" value="4.5" step="0.1" min="0.5">
                         </div>
                         <div class="form-group">
-                            <label for="roomWidth">Ширина кімнати (м)</label>
+                            <label for="roomWidth">Ширина (м)</label>
                             <input type="number" id="roomWidth" value="3.2" step="0.1" min="0.5">
                         </div>
                     </div>
@@ -106,10 +106,11 @@
                     <div class="form-group">
                         <label for="surfaceType">Тип поверхні</label>
                         <select id="surfaceType" onchange="updateRate()">
-                            <option value="0.12">Гладка шпакльована стіна (~120 мл/м²)</option>
-                            <option value="0.15">Шпалери під фарбування (~150 мл/м²)</option>
-                            <option value="0.18">Фактурна штукатурка (~180 мл/м²)</option>
-                            <option value="0.22">Бетон / цегла / дерево (~220 мл/м²)</option>
+                            <option value="0.12">Інтер'єрна: гладка шпаклівка (~120 мл/м²)</option>
+                            <option value="0.15">Інтер'єрна: шпалери під фарбування (~150 мл/м²)</option>
+                            <option value="0.16">Фасадна: гладка штукатурка / бетон (~160 мл/м²)</option>
+                            <option value="0.24">Фасадна: «короїд» / «баранчик» (~240 мл/м²)</option>
+                            <option value="0.22">Цегла / дерево / пориста основа (~220 мл/м²)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -170,30 +171,24 @@
         </div>
 
         <article class="seo-article">
-            <h2>Поради щодо розрахунку та нанесення фарби</h2>
-            <p>Виробники зазвичай вказують на банці витрату фарби в <strong>м²/л</strong> (наприклад, 8–10 м² з 1 літра) або в <strong>мл/м²</strong> (100–130 мл на квадратний метр) для одного шару по ідеально гладкій проґрунтованій основі.</p>
-            <ul>
-                <li><strong>Чому варто фарбувати у 2 шари:</strong> перший шар вбирається в основу та створює базовий тон, а другий робить колір насиченим і приховує сліди від валика.</li>
-                <li><strong>Економія за допомогою ґрунтовки:</strong> попереднє нанесення ґрунтовки глибокого проникнення знижує витрату дорогої інтер'єрної фарби на 15–20%.</li>
-                <li><strong>Запас 10%:</strong> частина фарби неминуче залишається у ванночці, на ворсі валика та стінках відра, тому купувати матеріал «впритул» не рекомендується.</li>
-            </ul>
-        </article>
-    </main>
+            <h2>Розхід фарби на м²: таблиця норм для інтер’єрних та фасадних робіт</h2>
+            <p>Точний <strong>розхід фарби на м2</strong> залежить від пористості поверхні, способу нанесення (валик, пензель або фарбопульт) та покривної здатності самої суміші. Особливо важливо враховувати фактуру стіни, коли ви розраховуєте <strong>розхід фасадної фарби на 1м2</strong>: гладкий бетон вбирає значно менше матеріалу, ніж декоративна штукатурка типу «короїд» чи «баранчик».</p>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
-        </div>
-    </footer>
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                    <thead>
+                        <tr style="background-color: #f4f6f8; border-bottom: 2px solid #dfe3e8;">
+                            <th style="padding: 12px;">Тип фарби та поверхні</th>
+                            <th style="padding: 12px;">Розхід на 1 м² (1 шар)</th>
+                            <th style="padding: 12px;">Площа з 1 літра</th>
+                            <th style="padding: 12px;">Порада майстра</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                               <tr style="border-bottom: 1px solid #dfe3e8;">
+                            <td style="padding: 12px;">Інтер’єрна водоемульсійна (по шпаклівці)</td>
+                            <td style="padding: 12px;">100 – 130 мл</td>
+                            <td style="padding: 12px;">8 – 10 м²</td>
+                            <td style="padding: 12px;">Наносити у 2 шари після ґрунтування</td>
+                        </tr>
 
-    <script>
-        function toggleMode() {
-            const mode = document.getElementById('calcMode').value;
-            const roomDim = document.getElementById('roomDimensions');
-            const heightGroup = document.getElementById('heightGroup');
-            const manualDim = document.getElementById('manualDimension');
-            const openingsBlock = document.getElementById('openingsBlock');
-
-            if (mode === 'walls') {
-                roomDim.style.display = 'block';
-                heightGroup.style.display = 'flex';
