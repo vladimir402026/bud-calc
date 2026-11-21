@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bud-calc.com.ua
+Sitemap: https://bud-calc.com.ua/sitemap.xml
