@@ -191,4 +191,142 @@
                             <td style="padding: 12px;">8 – 10 м²</td>
                             <td style="padding: 12px;">Наносити у 2 шари після ґрунтування</td>
                         </tr>
+                                                <tr style="border-bottom: 1px solid #dfe3e8;">
+                            <td style="padding: 12px;">Інтер’єрна по шпалерах під фарбування</td>
+                            <td style="padding: 12px;">130 – 160 мл</td>
+                            <td style="padding: 12px;">6 – 8 м²</td>
+                            <td style="padding: 12px;">Перший шар вбирається сильніше</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #dfe3e8;">
+                            <td style="padding: 12px;"><strong>Фасадна фарба по гладкій штукатурці / бетону</strong></td>
+                            <td style="padding: 12px;">140 – 180 мл</td>
+                            <td style="padding: 12px;">5,5 – 7 м²</td>
+                            <td style="padding: 12px;">Обов’язковий ґрунт глибокого проникнення</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #dfe3e8;">
+                            <td style="padding: 12px;"><strong>Фасадна фарба по «короїду» та «баранчику»</strong></td>
+                            <td style="padding: 12px;">200 – 280 мл</td>
+                            <td style="padding: 12px;">3,5 – 5 м²</td>
+                            <td style="padding: 12px;">Закладайте +15–20% запасу на рельєф</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px;">Емаль ПФ-115 / акрилова по дереву та металу</td>
+                            <td style="padding: 12px;">100 – 140 г</td>
+                            <td style="padding: 12px;">7 – 10 м²</td>
+                            <td style="padding: 12px;">Попередньо знежирити та заґрунтувати</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Поради щодо розрахунку та нанесення фарби</h3>
+            <ul>
+                <li><strong>Чому варто фарбувати у 2 шари:</strong> перший шар вбирається в основу та створює базовий тон, а другий робить колір насиченим і приховує сліди від валика.</li>
+                <li><strong>Економія за допомогою ґрунтовки:</strong> попереднє нанесення ґрунтовки глибокого проникнення знижує витрату дорогої фарби на 15–20%.</li>
+                <li><strong>Рахуйте у літрах, а не у кілограмах:</strong> на відрах часто пишуть вагу (наприклад, 14 кг — це приблизно 9,5–10 літрів залежно від густини фарби).</li>
+                <li><strong>Запас 10%:</strong> частина фарби неминуче залишається у ванночці, на ворсі валика та стінках відра, тому купувати матеріал «впритул» не рекомендується.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMode() {
+            const mode = document.getElementById('calcMode').value;
+            const roomDim = document.getElementById('roomDimensions');
+            const heightGroup = document.getElementById('heightGroup');
+            const manualDim = document.getElementById('manualDimension');
+            const openingsBlock = document.getElementById('openingsBlock');
+
+            if (mode === 'walls') {
+                roomDim.style.display = 'block';
+                heightGroup.style.display = 'block';
+                manualDim.style.display = 'none';
+                openingsBlock.style.display = 'block';
+            } else if (mode === 'ceiling') {
+                roomDim.style.display = 'block';
+                heightGroup.style.display = 'none';
+                manualDim.style.display = 'none';
+                openingsBlock.style.display = 'none';
+            } else {
+                roomDim.style.display = 'none';
+                manualDim.style.display = 'block';
+                openingsBlock.style.display = 'none';
+            }
+            calculatePaint();
+        }
+
+        function updateRate() {
+            const rate = document.getElementById('surfaceType').value;
+            document.getElementById('paintRate').value = rate;
+            calculatePaint();
+        }
+
+        function calculatePaint() {
+            const mode = document.getElementById('calcMode').value;
+            let netArea = 0;
+
+            if (mode === 'walls') {
+                const l = parseFloat(document.getElementById('roomLength').value) || 0;
+                const w = parseFloat(document.getElementById('roomWidth').value) || 0;
+                const h = parseFloat(document.getElementById('roomHeight').value) || 0;
+                const winArea = parseFloat(document.getElementById('winArea').value) || 0;
+                const winCount = parseInt(document.getElementById('winCount').value) || 0;
+                const doorArea = parseFloat(document.getElementById('doorArea').value) || 0;
+                const doorCount = parseInt(document.getElementById('doorCount').value) || 0;
+
+                const grossArea = 2 * (l + w) * h;
+                const openingsArea = (winArea * winCount) + (doorArea * doorCount);
+                netArea = Math.max(0, grossArea - openingsArea);
+            } else if (mode === 'ceiling') {
+                const l = parseFloat(document.getElementById('roomLength').value) || 0;
+                const w = parseFloat(document.getElementById('roomWidth').value) || 0;
+                netArea = l * w;
+            } else {
+                netArea = parseFloat(document.getElementById('manualArea').value) || 0;
+            }
+
+            const layers = parseInt(document.getElementById('layers').value) || 1;
+            const rate = parseFloat(document.getElementById('paintRate').value) || 0;
+            const reserve = parseFloat(document.getElementById('reserve').value) || 0;
+
+            const totalArea = netArea * layers;
+            const cleanLiters = totalArea * rate;
+            const finalLiters = cleanLiters * (1 + reserve / 100);
+            const approxWeight = finalLiters * 1.35;
+
+            document.getElementById('resArea').textContent = netArea.toFixed(1) + ' м²';
+            document.getElementById('resTotalArea').textContent = totalArea.toFixed(1) + ' м²';
+            document.getElementById('resCleanLiters').textContent = cleanLiters.toFixed(2) + ' л';
+            document.getElementById('resLiters').textContent = finalLiters.toFixed(1) + ' л';
+            document.getElementById('resReserveNote').textContent = 'з урахуванням запасу ' + reserve + '%';
+            document.getElementById('resWeight').textContent = approxWeight.toFixed(1) + ' кг';
+        }
+
+        function copyResults() {
+            const liters = document.getElementById('resLiters').textContent;
+            const area = document.getElementById('resArea').textContent;
+            const totalArea = document.getElementById('resTotalArea').textContent;
+            const weight = document.getElementById('resWeight').textContent;
+
+            const text = `Розрахунок фарби (БудКальк):\n- Чиста площа: ${area}\n- Площа з урахуванням шарів: ${totalArea}\n- Необхідно фарби: ${liters} (~${weight})`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const origText = btn.textContent;
+                btn.textContent = '✅ Скопійовано!';
+                setTimeout(() => { btn.textContent = origText; }, 2000);
+            });
+        }
+
+        window.onload = calculatePaint;
+    </script>
+</body>
+</html>
+
 
