@@ -447,4 +447,56 @@ body {
         grid-template-columns: 1fr;
     }
 }
+/* Блок перелінковки між калькуляторами */
+.related-calcs {
+    margin-bottom: 60px;
+}
+
+.related-calcs h2 {
+    color: var(--dark);
+    font-size: 1.35rem;
+    margin-bottom: 16px;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.related-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-decoration: none;
+    color: var(--dark);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.related-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.related-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.related-info strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.related-info span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
 
