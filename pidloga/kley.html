@@ -157,7 +157,166 @@
         </div>
     </footer>
 
-        <script>
+       <!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор плиткового клею онлайн — розрахунок мішків та витрати на м² | БудКальк</title>
+    <meta name="description" content="Точний онлайн-калькулятор плиткового клею: розрахунок ваги сухої суміші, кількості мішків (25 кг) та води залежно від формату плитки і зубця шпателя.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">Буд<span class="accent">Кальк</span></span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html#stiny">Стіни та стеля</a>
+                <a href="../index.html#pidloga">Підлога</a>
+                <a href="../index.html#inzheneriya">Інженерія</a>
+                <a href="../index.html#zagalni">Загальні</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumbs">
+            <a href="../index.html">Головна</a> &rarr; 
+            <a href="../index.html#pidloga">Підлога та облицювання</a> &rarr; 
+            <span>Плитковий клей</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Калькулятор плиткового клею</h1>
+            <p>Розрахуйте кількість мішків клею залежно від площі укладання, розміру плитки та висоти зубця шпателя.</p>
+        </div>
+
+        <div class="calc-wrapper">
+            
+            <!-- Ліва частина: Форма вводу -->
+            <div class="calc-form-box">
+                <div class="form-section-title">1. Площа та розмір плитки</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="area">Площа укладання (м²)</label>
+                        <input type="number" id="area" value="15" step="0.5" min="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="tileFormat">Формат плитки та зуб шпателя</label>
+                        <select id="tileFormat" onchange="updateTrowel()">
+                            <option value="2.0|1">Мозаїка (зуб шпателя 4 мм)</option>
+                            <option value="3.0|1">Мала 10×10 — 20×20 см (зуб 6 мм)</option>
+                            <option value="4.2|1" selected>Середня 30×30 — 45×45 см (зуб 8 мм)</option>
+                            <option value="5.0|1.2">Велика 60×60 см (зуб 10 мм)</option>
+                            <option value="6.0|1.25">Великоформатна 120×60 см (зуб 12 мм)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Параметри суміші та нанесення</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="glueRate">Базова витрата клею (кг/м²)</label>
+                        <input type="number" id="glueRate" value="4.2" step="0.1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="bagWeight">Вага мішка (кг)</label>
+                        <select id="bagWeight" onchange="calculateGlue()">
+                            <option value="25" selected>25 кг (стандарт)</option>
+                            <option value="20">20 кг</option>
+                            <option value="5">5 кг (дрібне фасування)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="doubleApply">Спосіб нанесення</label>
+                        <select id="doubleApply" onchange="calculateGlue()">
+                            <option value="1" selected>Тільки на основу (стіну/підлогу)</option>
+                            <option value="1.2">Комбінований (на основу + «на здир» на плитку, +20%)</option>
+                            <option value="1.25">Подвійне нанесення (для великого формату, +25%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reserve">Запас на нерівності основи (%)</label>
+                        <input type="number" id="reserve" value="10" step="1" min="0" max="40">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateGlue()">Розрахувати клей</button>
+            </div>
+
+            <!-- Права частина: Результати -->
+            <div class="calc-result-box">
+                <div class="result-header">📊 Результат розрахунку</div>
+                
+                <div class="result-main-card">
+                    <span>Необхідно придбати</span>
+                    <strong id="resBags">3 мішки</strong>
+                    <span id="resBagNote">по 25 кг (всього 69.3 кг)</span>
+                </div>
+
+                <ul class="result-list">
+                    <li>
+                        <span>Загальна вага (із запасом):</span>
+                        <strong id="resTotalWeight">69.3 кг</strong>
+                    </li>
+                    <li>
+                        <span>Чиста вага (без запасу):</span>
+                        <strong id="resCleanWeight">63.0 кг</strong>
+                    </li>
+                    <li>
+                        <span>Підсумкова витрата на 1 м²:</span>
+                        <strong id="resFinalRate">4.20 кг/м²</strong>
+                    </li>
+                    <li>
+                        <span>Орієнтовно води для замісу:</span>
+                        <strong id="resWater">~15 л</strong>
+                    </li>
+                </ul>
+
+                <button class="btn-copy" id="copyBtn">📋 Скопіювати розрахунок</button>
+
+                <div class="result-next-steps">
+                    <div class="result-next-title">Супутні розрахунки:</div>
+                    <div class="result-next-links">
+                        <a href="plytka.html" class="result-next-link">
+                            <span>🔲 Керамічна плитка</span>
+                            <span class="arrow">&rarr;</span>
+                        </a>
+                        <a href="../stiny/gruntovka.html" class="result-next-link">
+                            <span>💧 Розрахунок ґрунтовки</span>
+                            <span class="arrow">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <article class="seo-article">
+            <h2>Як не помилитися з вибором плиткового клею?</h2>
+            <p>Витрата клейової суміші залежить від рівності основи, розміру плитки та висоти зубця шпателя. Професійні майстри радять дотримуватися трьох правил:</p>
+            <ul>
+                <li><strong>Правило підбору гребінки:</strong> висота зубця шпателя має дорівнювати приблизно 1/3 від товщини плитки або підбиратися під її формат (6 мм для дрібної плитки, 8–10 мм для формату 45×45 та 60×60 см, 12 мм для великоформатного керамограніту).</li>
+                <li><strong>Комбіноване нанесення:</strong> для керамограніту розміром від 60×60 см, у системах «тепла підлога» та на балконах клей обов'язково наноситься як на основу зубчастим шпателем, так і тонким шаром («на здир») на тильну сторону плитки.</li>
+                <li><strong>Клас клею:</strong> для звичайної керамічної плитки на стіну підійде клей класу <strong>C1</strong>, а для керамограніту та теплої підлоги потрібен еластичний клей класу <strong>C2TE</strong> або <strong>C2TE S1</strong>.</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 БудКальк — Усі будівельні розрахунки в одному місці.</p>
+        </div>
+    </footer>
+
+    <script>
         function updateTrowel() {
             const val = document.getElementById('tileFormat').value;
             const sep = val.indexOf('|');
