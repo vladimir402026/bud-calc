@@ -163,13 +163,13 @@
         </div>
     </footer>
 
-        <script>
+            <script>
         function applyTilePreset() {
             const preset = document.getElementById('tilePreset').value;
             if (preset !== 'custom') {
-                const parts = preset.split('x');
-                document.getElementById('tileLength').value = parts;
-                document.getElementById('tileWidth').value = parts;
+                const sep = preset.indexOf('x');
+                document.getElementById('tileLength').value = preset.slice(0, sep);
+                document.getElementById('tileWidth').value = preset.slice(sep + 1);
             }
             calculateTile();
         }
