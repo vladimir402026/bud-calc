@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Мікророзмітка онлайн-калькулятора (WebApplication)
     schemas.push({
         "@context": "https://schema.org",
-        "@type": "WebApplication",
+        "@type": "SoftwareApplication",
         "name": title,
         "description": desc,
         "url": url,
