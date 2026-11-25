@@ -105,23 +105,10 @@
                         <strong id="resConsumption">~0.45 кВт/год</strong>
                     </li>
                 </ul>
-                                <div class="result-next-steps">
-                    <div class="result-next-title">Покриття для теплої підлоги:</div>
-                    <div class="result-next-links">
-                        <a href="plytka.html" class="result-next-link">
-                            <span>🔲 Керамічна плитка</span>
-                            <span class="arrow">&rarr;</span>
-                        </a>
-                        <a href="laminat.html" class="result-next-link">
-                            <span>🪵 Калькулятор ламінату</span>
-                            <span class="arrow">&rarr;</span>
-                        </a>
-                    </div>
-                </div>
 
+                <button class="btn-copy" id="copyBtn">📋 Скопіювати розрахунок</button>
 
-                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
-                                <div class="result-next-steps">
+                <div class="result-next-steps">
                     <div class="result-next-title">Покриття для теплої підлоги:</div>
                     <div class="result-next-links">
                         <a href="plytka.html" class="result-next-link">
@@ -164,14 +151,12 @@
 
             const heatArea = Math.max(0.5, totalArea - furnArea);
             const totalPower = Math.round(heatArea * specificPower);
-            // Середнє споживання з терморегулятором ~35% від номінальної потужності
             const avgConsumption = ((totalPower / 1000) * 0.35).toFixed(2);
 
             const rowCable = document.getElementById('rowCable');
             const rowStep = document.getElementById('rowStep');
 
             if (system === 'water') {
-                // Для водяної підлоги: ~6.7 м труби на 1 м² при кроці 15 см + 10 м на підведення до колектора
                 const pipeLen = Math.ceil(heatArea * 6.7 + 10);
                 document.getElementById('resMainTitle').textContent = 'Довжина труби (крок 15 см)';
                 document.getElementById('resPower').textContent = pipeLen + ' м';
@@ -180,7 +165,6 @@
                 rowStep.style.display = 'flex';
                 document.getElementById('resStep').textContent = '15.0 см (1 контур до 80 м)';
             } else if (system === 'cable') {
-                // Потужність кабелю ~18 Вт/м
                 const cableLen = Math.ceil(totalPower / 18);
                 const stepCm = ((heatArea * 100) / cableLen).toFixed(1);
                 document.getElementById('resMainTitle').textContent = 'Необхідна потужність';
@@ -191,7 +175,6 @@
                 document.getElementById('resCableLen').textContent = cableLen + ' м';
                 document.getElementById('resStep').textContent = stepCm + ' см';
             } else {
-                // Мат або ІЧ-плівка
                 const matArea = (Math.floor(heatArea * 2) / 2).toFixed(1);
                 document.getElementById('resMainTitle').textContent = 'Необхідна потужність';
                 document.getElementById('resPower').textContent = totalPower + ' Вт';
@@ -201,11 +184,10 @@
             }
 
             document.getElementById('resHeatArea').textContent = heatArea.toFixed(1) + ' м²';
+            document.getElementById('resHeatArea').textContent = heatArea.toFixed(1) + ' м²';
             document.getElementById('resConsumption').textContent = system === 'water' ? 'від котла' : `~${avgConsumption} кВт/год`;
         }
-
-        function copyResults() {
-            const title = document.getElementById('resMainTitle').textContent;
-            const mainVal = document.getElementById('resPower').textContent;
-            const sub = document.getElementById('resSubNote').textContent;
-
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
