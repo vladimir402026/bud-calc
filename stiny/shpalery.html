@@ -144,7 +144,7 @@
         </div>
     </footer>
 
-    <script>
+       <script>
         function calculateWallpaper() {
             var length = parseFloat(document.getElementById('roomLength').value) || 0;
             var width = parseFloat(document.getElementById('roomWidth').value) || 0;
@@ -161,11 +161,15 @@
             var doorCount = parseInt(document.getElementById('doorCount').value) || 0;
 
             var totalPerimeter = (length + width) * 2;
-            var openingsWidth = (winWidth * winCount) + (doorWidth * doorCount);
-            var cleanPerimeter = Math.max(0, totalPerimeter - openingsWidth);
+            // Для смуг: віднімаємо лише 50% ширини дверей та 30% ширини вікон (бо над/під вікном теж клеяться шпалери)
+            var effectiveOpenings = (winWidth * winCount * 0.3) + (doorWidth * doorCount * 0.5);
+            var calcPerimeter = Math.max(0, totalPerimeter - effectiveOpenings);
 
-            var area = cleanPerimeter * height;
-            var stripsNeeded = Math.ceil(cleanPerimeter / rollWidth);
+            // Чиста площа стін (для довідки)
+            var openingsArea = (winWidth * 1.4 * winCount) + (doorWidth * 2.05 * doorCount);
+            var netArea = Math.max(0, (totalPerimeter * height) - openingsArea);
+
+            var stripsNeeded = Math.ceil(calcPerimeter / rollWidth);
 
             var stripHeight = height + 0.10;
             if (rapportM > 0) {
@@ -176,8 +180,8 @@
             var rollsNeeded = stripsPerRoll > 0 ? Math.ceil(stripsNeeded / stripsPerRoll) : 0;
 
             document.getElementById('resRolls').textContent = rollsNeeded + ' рул.';
-            document.getElementById('resPerimeter').textContent = cleanPerimeter.toFixed(2) + ' м';
-            document.getElementById('resArea').textContent = area.toFixed(1) + ' м²';
+            document.getElementById('resPerimeter').textContent = totalPerimeter.toFixed(1) + ' м';
+            document.getElementById('resArea').textContent = netArea.toFixed(1) + ' м²';
             document.getElementById('resStrips').textContent = stripsNeeded + ' шт.';
             document.getElementById('resStripsPerRoll').textContent = (stripsPerRoll > 0 ? stripsPerRoll : 0) + ' шт.';
         }
@@ -198,19 +202,8 @@
         });
 
         document.getElementById('calcBtn').addEventListener('click', calculateWallpaper);
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
 
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            var rolls = document.getElementById('resRolls').textContent;
-            var area = document.getElementById('resArea').textContent;
-            var strips = document.getElementById('resStrips').textContent;
-            var text = "Розрахунок шпалер (БудКальк):\n- Рулонів: " + rolls + "\n- Площа: " + area + "\n- Смуг: " + strips;
-
-            var el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-
-            var btn = this;
-            btn.textContent = '✅ Скопійовано!';
