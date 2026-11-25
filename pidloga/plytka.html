@@ -163,7 +163,7 @@
         </div>
     </footer>
 
-    <script>
+        <script>
         function applyTilePreset() {
             const preset = document.getElementById('tilePreset').value;
             if (preset !== 'custom') {
@@ -180,11 +180,10 @@
             const tileL = (parseFloat(document.getElementById('tileLength').value) || 600) / 1000;
             const tileW = (parseFloat(document.getElementById('tileWidth').value) || 600) / 1000;
             const joint = (parseFloat(document.getElementById('jointWidth').value) || 0) / 1000;
-            const perBox = parseInt(document.getElementById('tilesPerBox').value) || 1;
-            const reserve = parseFloat(document.getElementById('reserve').value) || 10;
+            const perBox = Math.max(1, parseInt(document.getElementById('tilesPerBox').value) || 1);
+            const reserve = parseFloat(document.getElementById('reserve').value) || 0;
 
             const surfaceArea = surfL * surfW;
-            // Площа 1 плитки з урахуванням половини шва по периметру
             const effectiveTileArea = (tileL + joint) * (tileW + joint);
             const pureTileArea = tileL * tileW;
 
@@ -201,14 +200,7 @@
             document.getElementById('resBoxes').textContent = boxes + ' уп.';
             document.getElementById('resCrosses').textContent = '~' + crosses + ' шт.';
         }
-
-        function copyResults() {
-            const tiles = document.getElementById('resTiles').textContent;
-            const note = document.getElementById('resBoxesNote').textContent;
-            const area = document.getElementById('resSurfaceArea').textContent;
-
-            const text = `Розрахунок плитки (БудКальк):\n- Потрібно: ${tiles} (${note})\n- Площа поверхні: ${area}`;
-
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.getElementById('copyBtn');
-                const originalText = btn.textContent;
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
