@@ -119,23 +119,10 @@
                         <span>Орієнтовно води для замісу:</span>
                         <strong id="resWater">~15 л</strong>
                     </li>
-                </ul>
-                                <div class="result-next-steps">
-                    <div class="result-next-title">Супутні розрахунки:</div>
-                    <div class="result-next-links">
-                        <a href="plytka.html" class="result-next-link">
-                            <span>🔲 Керамічна плитка</span>
-                            <span class="arrow">&rarr;</span>
-                        </a>
-                        <a href="../stiny/gruntovka.html" class="result-next-link">
-                            <span>💧 Розрахунок ґрунтовки</span>
-                            <span class="arrow">&rarr;</span>
-                        </a>
-                    </div>
-                </div>
+                               </ul>
 
+                <button class="btn-copy" id="copyBtn">📋 Скопіювати розрахунок</button>
 
-                <button class="btn-copy" id="copyBtn" onclick="copyResults()">📋 Скопіювати розрахунок</button>
                                 <div class="result-next-steps">
                     <div class="result-next-title">Супутні розрахунки:</div>
                     <div class="result-next-links">
@@ -170,11 +157,12 @@
         </div>
     </footer>
 
-    <script>
+        <script>
         function updateTrowel() {
-            const parts = document.getElementById('tileFormat').value.split('|');
-            document.getElementById('glueRate').value = parts[0];
-            document.getElementById('doubleApply').value = parts[1];
+            const val = document.getElementById('tileFormat').value;
+            const sep = val.indexOf('|');
+            document.getElementById('glueRate').value = val.slice(0, sep);
+            document.getElementById('doubleApply').value = val.slice(sep + 1);
             calculateGlue();
         }
 
@@ -202,16 +190,7 @@
             document.getElementById('resFinalRate').textContent = finalRate.toFixed(2) + ' кг/м²';
             document.getElementById('resWater').textContent = `~${water} л`;
         }
-
-        function copyResults() {
-            const bags = document.getElementById('resBags').textContent;
-            const weight = document.getElementById('resTotalWeight').textContent;
-            const area = document.getElementById('area').value;
-            const rate = document.getElementById('resFinalRate').textContent;
-
-            const text = `Розрахунок плиткового клею (БудКальк):\n- Потрібно: ${bags} (${weight})\n- Площа укладання: ${area} м²\n- Витрата: ${rate}`;
-
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.getElementById('copyBtn');
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Скопійовано в буфер!';
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
