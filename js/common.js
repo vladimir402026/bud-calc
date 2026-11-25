@@ -7,34 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
         k => (k.startsWith('calculate') || k.startsWith('calc')) && typeof window[k] === 'function'
     );
 
-    // Отримуємо головне число та одиницю виміру з картки результату
     function getMainQuantity() {
         const card = resultBox.querySelector('.result-main-card');
         const strong = card?.querySelector('strong');
         if (!strong) return { qty: 0, unit: 'од.' };
         const raw = strong.textContent.trim();
 
-        // Не додаємо блок ціни там, де калькулятор уже рахує гроші
         if (raw.includes('$') || raw.includes('грн')) {
             return { qty: 0, unit: '' };
         }
 
-        // Якщо головний результат це відріз (напр. "3.5 × 4.9 м"), беремо площу в м² з картки
         if (raw.includes('×')) {
-            const areaMatch = card.textContent.match(/([\d.,]+)\s*м²/);
+            const areaMatch = card.textContent.replace(',', '.').match(/[\d.]+(?=\s*м²)/);
             if (areaMatch) {
-                return { qty: parseFloat(areaMatch[1].replace(',', '.')), unit: 'м²' };
+                return { qty: parseFloat(areaMatch), unit: 'м²' };
             }
             return { qty: 0, unit: '' };
         }
 
-        const match = raw.match(/[\d.,]+/);
-        const qty = match ? parseFloat(match[0].replace(',', '.')) : 0;
+        const match = raw.replace(',', '.').match(/[\d.]+/);
+        const qty = match ? parseFloat(match) : 0;
         const unit = raw.replace(/[\d.,\s~]+/, '').trim() || 'од.';
         return { qty, unit };
     }
 
-    // Створюємо блок кошторису (якщо головний результат кількісний)
     let costInput = null;
     let costTotalEl = null;
     let costUnitLabel = null;
@@ -93,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         costInput.addEventListener('input', updateCost);
     }
 
-    // Кнопка копіювання
     const oldBtn = document.getElementById('copyBtn') || resultBox.querySelector('.btn-copy');
     if (oldBtn) {
         const btn = oldBtn.cloneNode(true);
@@ -124,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => (btn.textContent = orig), 2000);
         });
 
-        // Кнопка PDF
         if (!document.getElementById('printBtn')) {
             const pdf = document.createElement('button');
             pdf.id = 'printBtn';
