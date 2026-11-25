@@ -210,6 +210,14 @@
 
             document.getElementById('resCut').textContent = `${rollW} × ${cutLength.toFixed(2)} м${warning}`;
             document.getElementById('resTotalSqm').textContent = `площа рулону ${boughtArea.toFixed(2)} м² (чиста ${cleanArea.toFixed(2)} м²)`;
-            
-            document.getElementById('lblPlinthL').textContent = plinthL;
+                   document.getElementById('lblPlinthL').textContent = plinthL;
             document.getElementById('resPlinths').textContent = `${plinthCount} шт. (${cleanPlinthMeters.toFixed(1)} м)`;
+            document.getElementById('resInnerCorners').textContent = `${innerCorners} шт.`;
+            document.getElementById('resOuterCorners').textContent = `${outerCorners} шт.`;
+            document.getElementById('resConnectors').textContent = `${connectors} шт.`;
+            document.getElementById('resCaps').textContent = `${caps} шт. (${doorCount} пар)`;
+        }
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
