@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState({}, '', newUrl);
     }
 
-    // 4. Універсальне копіювання (з резервним методом для будь-яких браузерів)
+    // 4. Універсальне копіювання
     const oldCopyBtn = document.getElementById('copyBtn') || resultBox.querySelector('.btn-copy');
     if (oldCopyBtn) {
         const copyBtn = oldCopyBtn.cloneNode(true);
@@ -50,17 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
         oldCopyBtn.replaceWith(copyBtn);
 
         copyBtn.addEventListener('click', () => {
-            const title = document.querySelector('h1')?.textContent.trim() || 'Розрахунок (БудКальк)';
+            const titleEl = document.querySelector('h1');
+            const title = titleEl ? titleEl.textContent.trim() : 'Розрахунок';
             let lines = [`📐 ${title} (БудКальк):\n`];
 
             const mainCard = resultBox.querySelector('.result-main-card');
             if (mainCard) {
-                const spans = mainCard.querySelectorAll('span');
-                const strong = mainCard.querySelector('strong');
-                const label = spans[0] ? spans[0].textContent.trim() : 'Результат';
-                const value = strong ? strong.textContent.trim() : '';
-                const note = spans[1] && spans[1].textContent.trim() ? ` (${spans[1].textContent.trim()})` : '';
-                lines.push(`★ ${label}: ${value}${note}`);
+                const parts = Array.from(mainCard.children)
+                    .map(el => el.textContent.trim())
+                    .filter(Boolean);
+                if (parts.length > 0) {
+                    lines.push(`★ ${parts.join(' — ')}`);
+                }
             }
 
             resultBox.querySelectorAll('.result-list li').forEach(li => {
@@ -76,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
             lines.push(`\n🔗 Посилання на розрахунок:\n${window.location.href}`);
             const textToCopy = lines.join('\n');
 
-            // Надійне копіювання (працює навіть без HTTPS або при обмеженнях браузера)
             const fallbackCopy = (text) => {
                 const ta = document.createElement('textarea');
                 ta.value = text;
