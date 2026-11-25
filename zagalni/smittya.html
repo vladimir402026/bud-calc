@@ -202,7 +202,7 @@
             let truckNote = 'кузов 8–10 м³ (1 рейс)';
             let loaders = '2 чол.';
 
-            if (tons <= 1.5 && volumeM3 <= 9) {
+                       if (tons <= 1.5 && volumeM3 <= 9) {
                 truck = 'Газель / Бус (до 1.5 т)';
                 truckNote = 'кузов 8–10 м³';
                 loaders = tons > 0.8 ? '2 чол.' : '1–2 чол.';
@@ -210,3 +210,25 @@
                 truck = 'Вантажівка 3-тонник';
                 truckNote = 'кузов 14–18 м³';
                 loaders = '2–3 чол.';
+            } else if (tons <= 5.0 && volumeM3 <= 25) {
+                truck = 'Самоскид ЗІЛ / 5-тонник';
+                truckNote = 'кузов до 6–25 м³ (або 2 ходки Газелі)';
+                loaders = '3–4 чол.';
+            } else {
+                const zilTrips = Math.ceil(Math.max(tons / 5, volumeM3 / 8));
+                truck = `Самоскид КАМАЗ (10 т) або ${zilTrips} ходки ЗІЛ`;
+                truckNote = 'великий обсяг демонтажу';
+                loaders = '4+ чол.';
+            }
+
+            document.getElementById('resTruck').textContent = truck;
+            document.getElementById('resTruckNote').textContent = truckNote;
+            document.getElementById('resWeight').textContent = `${Math.round(weightKg)} кг (${tons.toFixed(2)} т)`;
+            document.getElementById('resVolume').textContent = `${volumeM3.toFixed(2)} м³`;
+            document.getElementById('resBags').textContent = `${bagsCount} шт.`;
+            document.getElementById('resLoaders').textContent = loaders;
+        }
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
