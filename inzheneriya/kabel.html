@@ -200,8 +200,7 @@
             let selected = table[table.length - 1];
             let dropPercent = 0;
 
-            for (let i = 0; i < table.length; i++) {
-                const item = table[i];
+                      for (const item of table) {
                 const maxAmp = install === 'closed' ? item.closed : item.open;
                 
                 // Падіння напруги (для 1 фази коеф 2, для 3 фаз 1.732)
@@ -210,3 +209,39 @@
                 const dPercent = (deltaU / voltage) * 100;
 
                 if (maxAmp >= current * 1.05 && dPercent <= 5) {
+                    selected = item;
+                    dropPercent = dPercent;
+                    break;
+                }
+            }
+
+            // Якщо навіть максимальний переріз має великі втрати напруги
+            if (dropPercent === 0) {
+                const factor = voltage === 220 ? 2 : 1.732;
+                const deltaU = (factor * current * length * rho) / selected.s;
+                dropPercent = (deltaU / voltage) * 100;
+            }
+
+            const maxAllowedAmp = install === 'closed' ? selected.closed : selected.open;
+            const maxKw = voltage === 220 
+                ? (maxAllowedAmp * 220 * cosPhi) / 1000 
+                : (maxAllowedAmp * 380 * 1.732 * cosPhi) / 1000;
+
+            const matLabel = material === 'copper' 
+                ? `мідний кабель (напр. ВВГнг ${voltage === 220 ? '3' : '5'}×${selected.s})` 
+                : `алюмінієвий кабель (напр. АВВГ ${voltage === 220 ? '2' : '4'}×${selected.s})`;
+
+            const dropStatus = dropPercent <= 5 ? 'в нормі до 5%' : 'перевищення 5%!';
+
+            document.getElementById('resSection').textContent = `${selected.s} мм²`;
+            document.getElementById('resMatNote').textContent = matLabel;
+            document.getElementById('resCurrent').textContent = `${current.toFixed(1)} А`;
+            document.getElementById('resBreaker').textContent = `${selected.breaker} А (характеристика C або B)`;
+            document.getElementById('lblLen').textContent = length;
+            document.getElementById('resDrop').textContent = `${dropPercent.toFixed(1)}% (${dropStatus})`;
+            document.getElementById('resMaxPower').textContent = `${maxKw.toFixed(1)} кВт (при ${maxAllowedAmp} А)`;
+        }
+    </script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
