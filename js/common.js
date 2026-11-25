@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (raw.includes('×')) {
             const areaMatch = card.textContent.replace(',', '.').match(/[\d.]+(?=\s*м²)/);
             if (areaMatch) {
-                return { qty: parseFloat(areaMatch), unit: 'м²' };
+                return { qty: parseFloat(areaMatch.toString()), unit: 'м²' };
             }
             return { qty: 0, unit: '' };
         }
 
         const match = raw.replace(',', '.').match(/[\d.]+/);
-        const qty = match ? parseFloat(match) : 0;
+        const qty = match ? parseFloat(match.toString()) : 0;
         const unit = raw.replace(/[\d.,\s~]+/, '').trim() || 'од.';
         return { qty, unit };
     }
