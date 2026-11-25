@@ -137,94 +137,48 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('input', run);
         el.addEventListener('change', run);
     });
-// Автоматична генерація SEO-мікророзмітки Schema.org для кожної сторінки калькулятора
-document.addEventListener('DOMContentLoaded', () => {
+
+    // SEO-мікророзмітка Schema.org
     const title = document.querySelector('h1')?.textContent.trim();
     const desc = document.querySelector('meta[name="description"]')?.getAttribute('content') || title;
     const url = window.location.origin + window.location.pathname;
-    if (!title) return;
-
-    const schemas = [];
-
-    // 1. Мікророзмітка онлайн-калькулятора (WebApplication)
-    schemas.push({
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": title,
-        "description": desc,
-        "url": url,
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "All",
-        "inLanguage": "uk",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "UAH"
-        }
-    });
-
-    // 2. Мікророзмітка хлібних крихт (BreadcrumbList)
-    const bcLinks = document.querySelectorAll('.breadcrumbs a');
-    const bcCurrent = document.querySelector('.breadcrumbs span');
-    if (bcLinks.length > 0) {
-        const items = [];
-        bcLinks.forEach((a, idx) => {
-            items.push({
-                "@type": "ListItem",
-                "position": idx + 1,
-                "name": a.textContent.trim(),
-                "item": a.href
-            });
-        });
-        if (bcCurrent) {
-            items.push({
-                "@type": "ListItem",
-                "position": items.length + 1,
-                "name": bcCurrent.textContent.trim(),
-                "item": url
-            });
-        }
-        schemas.push({
+    if (title) {
+        const schemas = [{
             "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": items
-        });
-    }
+            "@type": "SoftwareApplication",
+            "name": title,
+            "description": desc,
+            "url": url,
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "All",
+            "inLanguage": "uk",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "UAH" }
+        }];
 
-    // 3. Мікророзмітка частих запитань (FAQPage) зі списків у SEO-статті
-    const faqItems = [];
-    document.querySelectorAll('.seo-article li').forEach(li => {
-        const strong = li.querySelector('strong');
-        if (strong && strong.textContent.includes('?')) {
-            const question = strong.textContent.trim();
-            const answer = li.textContent.replace(question, '').trim();
-            if (answer.length > 10) {
-                faqItems.push({
-                    "@type": "Question",
-                    "name": question,
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": answer
-                    }
-                });
+        const faqItems = [];
+        document.querySelectorAll('.seo-article li').forEach(li => {
+            const strong = li.querySelector('strong');
+            if (strong && strong.textContent.includes('?')) {
+                const q = strong.textContent.trim();
+                const a = li.textContent.replace(q, '').trim();
+                if (a.length > 10) {
+                    faqItems.push({
+                        "@type": "Question",
+                        "name": q,
+                        "acceptedAnswer": { "@type": "Answer", "text": a }
+                    });
+                }
             }
+        });
+        if (faqItems.length > 0) {
+            schemas.push({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqItems });
         }
-    });
 
-    if (faqItems.length > 0) {
-        schemas.push({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": faqItems
+        schemas.forEach(obj => {
+            const s = document.createElement('script');
+            s.type = 'application/ld+json';
+            s.textContent = JSON.stringify(obj);
+            document.head.appendChild(s);
         });
     }
-
-    // Додаємо згенеровану мікророзмітку в <head> сторінки
-    schemas.forEach(schemaObj => {
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(schemaObj);
-        document.head.appendChild(script);
-    });
 });
-
