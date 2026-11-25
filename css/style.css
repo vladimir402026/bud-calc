@@ -512,4 +512,14 @@ body {
         border: 1px solid #cbd5e1 !important;
         width: 100% !important;
     }
+    @media print {
+    #costEstimatorBox input {
+        display: none !important;
+    }
+    #costEstimatorBox {
+        border: none !important;
+        padding: 8px 0 !important;
+    }
 }
+
+
