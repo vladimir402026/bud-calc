@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url><loc>https://bud-calc.com.ua</loc><priority>1.0</priority></url>
+  <url><loc>https://bud-calc.com.ua/</loc><lastmod>2026-11-25</lastmod><priority>1.0</priority></url>
   
   <!-- Стіни та стеля -->
-  <url><loc>https://bud-calc.com.ua/stiny/shpalery.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/farba.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/shtukaturka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/shpaklivka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/gipsokarton.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/gruntovka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/kladka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/uteplyuvach.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/stiny/natyazhna-stelya.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/shpalery.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/farba.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/shtukaturka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/shpaklivka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/gipsokarton.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/gruntovka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/kladka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/uteplyuvach.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/stiny/natyazhna-stelya.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
 
   <!-- Підлога та облицювання -->
-  <url><loc>https://bud-calc.com.ua/pidloga/laminat.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/plytka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/kley.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/styazhka.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/tepla-pidloga.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/linoleum.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/pidloga/brukivka.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/laminat.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/plytka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/kley.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/styazhka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/tepla-pidloga.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/linoleum.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/pidloga/brukivka.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
 
   <!-- Інженерія -->
-  <url><loc>https://bud-calc.com.ua/inzheneriya/kabel.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/inzheneriya/radiatory.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/inzheneriya/kondytsioner.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/inzheneriya/kabel.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/inzheneriya/radiatory.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/inzheneriya/kondytsioner.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
 
   <!-- Загальні -->
-  <url><loc>https://bud-calc.com.ua/zagalni/remont.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/zagalni/smittya.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/zagalni/pokrivlya.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/zagalni/beton.html</loc><priority>0.8</priority></url>
-  <url><loc>https://bud-calc.com.ua/zagalni/skhody.html</loc><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/zagalni/remont.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/zagalni/smittya.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/zagalni/pokrivlya.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/zagalni/beton.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://bud-calc.com.ua/zagalni/skhody.html</loc><lastmod>2026-11-25</lastmod><priority>0.8</priority></url>
 </urlset>
