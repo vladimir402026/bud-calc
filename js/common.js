@@ -7,15 +7,34 @@ document.addEventListener('DOMContentLoaded', () => {
         k => (k.startsWith('calculate') || k.startsWith('calc')) && typeof window[k] === 'function'
     );
 
-    // Отримуємо головне число та одиницю виміру з картки результату
+      // Отримуємо головне число та одиницю виміру з картки результату
     function getMainQuantity() {
-        const strong = resultBox.querySelector('.result-main-card strong');
+        const card = resultBox.querySelector('.result-main-card');
+        const strong = card?.querySelector('strong');
         if (!strong) return { qty: 0, unit: 'од.' };
         const raw = strong.textContent.trim();
-        // Не рахуємо ціну там, де результат уже в грошах ($ або грн) або в тексті
-        if (raw.includes('$') || raw.includes('грн') || raw.includes('×')) {
+
+        // Не додаємо блок ціни там, де калькулятор уже рахує гроші
+        if (raw.includes('$') || raw.includes('грн')) {
             return { qty: 0, unit: '' };
         }
+
+        // Якщо головний результат це відріз (напр. "3.5 × 4.9 м"), беремо площу в м² з підпису нижче
+        if (raw.includes('×')) {
+            const subText = card.querySelectorAll('span')?.textContent || '';
+            const areaMatch = subText.match(/([\d.,]+)\s*м²/);
+            if (areaMatch) {
+                return { qty: parseFloat(areaMatch.replace(',', '.')), unit: 'м²' };
+            }
+            return { qty: 0, unit: '' };
+        }
+
+        const match = raw.match(/[\d.,]+/);
+        const qty = match ? parseFloat(match.replace(',', '.')) : 0;
+        const unit = raw.replace(/[\d.,\s~]+/, '').trim() || 'од.';
+        return { qty, unit };
+    }
+
         const match = raw.match(/[\d.,]+/);
         const qty = match ? parseFloat(match[0].replace(',', '.')) : 0;
         const unit = raw.replace(/[\d.,\s~]+/, '').trim() || 'од.';
