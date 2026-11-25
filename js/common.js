@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultBox = document.querySelector('.calc-result-box');
     if (!formBox || !resultBox) return;
 
-    // 1. Знаходимо функцію розрахунку сторінки (calculate... або calc...)
+    // 1. Знаходимо функцію розрахунку сторінки
     const calcFnName = Object.keys(window).find(
         key => (key.startsWith('calculate') || key.startsWith('calc')) && typeof window[key] === 'function'
     );
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState({}, '', newUrl);
     }
 
-    // 4. Універсальне копіювання (очищаємо старі слухачі через заміну кнопки)
+    // 4. Універсальне копіювання (з резервним методом для будь-яких браузерів)
     const oldCopyBtn = document.getElementById('copyBtn') || resultBox.querySelector('.btn-copy');
     if (oldCopyBtn) {
         const copyBtn = oldCopyBtn.cloneNode(true);
@@ -57,27 +57,52 @@ document.addEventListener('DOMContentLoaded', () => {
             if (mainCard) {
                 const spans = mainCard.querySelectorAll('span');
                 const strong = mainCard.querySelector('strong');
-                const label = spans?.textContent.trim() || 'Результат';
-                const value = strong?.textContent.trim() || '';
-                const note = spans?.textContent.trim() ? ` (${spans.textContent.trim()})` : '';
+                const label = spans[0] ? spans[0].textContent.trim() : 'Результат';
+                const value = strong ? strong.textContent.trim() : '';
+                const note = spans[1] && spans[1].textContent.trim() ? ` (${spans[1].textContent.trim()})` : '';
                 lines.push(`★ ${label}: ${value}${note}`);
             }
 
             resultBox.querySelectorAll('.result-list li').forEach(li => {
-                const name = li.querySelector('span')?.textContent.replace(':', '').trim();
-                const val = li.querySelector('strong')?.textContent.trim();
-                if (name && val) {
+                const nameEl = li.querySelector('span');
+                const valEl = li.querySelector('strong');
+                if (nameEl && valEl) {
+                    const name = nameEl.textContent.replace(':', '').trim();
+                    const val = valEl.textContent.trim();
                     lines.push(`• ${name}: ${val}`);
                 }
             });
 
             lines.push(`\n🔗 Посилання на розрахунок:\n${window.location.href}`);
+            const textToCopy = lines.join('\n');
 
-            navigator.clipboard.writeText(lines.join('\n')).then(() => {
+            // Надійне копіювання (працює навіть без HTTPS або при обмеженнях браузера)
+            const fallbackCopy = (text) => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            };
+
+            const onSuccess = () => {
                 const orig = copyBtn.textContent;
                 copyBtn.textContent = '✅ Скопійовано з посиланням!';
                 setTimeout(() => (copyBtn.textContent = orig), 2200);
-            });
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(onSuccess).catch(() => {
+                    fallbackCopy(textToCopy);
+                    onSuccess();
+                });
+            } else {
+                fallbackCopy(textToCopy);
+                onSuccess();
+            }
         });
 
         // 5. Додаємо кнопку "Зберегти в PDF / Друк"
