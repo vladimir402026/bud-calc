@@ -1,3 +1,25 @@
+(function() {
+  // Беремо поточний шлях без параметрів (?...) та хешів (#...)
+  let cleanPath = window.location.pathname;
+  
+  // Якщо в sitemap.xml посилання ВКАЗАНІ з .html, використовуйте цей варіант:
+  if (cleanPath.endsWith('/index.html')) {
+    cleanPath = cleanPath.replace('/index.html', '/');
+  }
+  
+  // Якщо в sitemap.xml посилання БЕЗ .html — розкоментуйте рядок нижче:
+  // cleanPath = cleanPath.replace(/\.html$/, '');
+
+  const canonicalUrl = 'https://bud-calc.com.ua' + cleanPath;
+
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', canonicalUrl);
+})();
 document.addEventListener('DOMContentLoaded', () => {
     const formBox = document.querySelector('.calc-form-box');
     const resultBox = document.querySelector('.calc-result-box');
