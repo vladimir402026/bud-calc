@@ -216,3 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
 })(window, document, "clarity", "script", "zk9rl3wxqm");
 
 });
+// === АВТОМАТИЧНІ ПОСИЛАННЯ У ФУТЕРІ ДЛЯ ADSENSE ===
+document.addEventListener('DOMContentLoaded', function() {
+  const footerP = document.querySelector('.footer p');
+  if (footerP && !footerP.innerHTML.includes('privacy.html')) {
+    const isSubfolder = /\/(stiny|pidloga|inzheneriya|zagalni)\//.test(window.location.pathname);
+    const prefix = isSubfolder ? '../' : '';
+    footerP.innerHTML += ` | <a href="${prefix}about.html" style="color: inherit; text-decoration: underline;">Про проєкт</a> | <a href="${prefix}privacy.html" style="color: inherit; text-decoration: underline;">Політика конфіденційності</a>`;
+  }
+});
+
